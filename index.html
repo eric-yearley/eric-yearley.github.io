@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eric J. Yearley, PhD | Analytical Development Leader</title>
+    <meta name="description" content="Distinguished analytical development leader with 13+ years experience in biologics, vaccines, and gene therapy. Expert in mRNA-LNP, AAV, and monoclonal antibody characterization.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #0a0b0d;
+            --bg-secondary: #111318;
+            --bg-elevated: #1a1d24;
+            --bg-card: #15171c;
+            --text-primary: #f0f2f5;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --accent-primary: #00d4ff;
+            --accent-gold: #fbbf24;
+            --accent-violet: #a78bfa;
+            --border-subtle: rgba(255,255,255,0.06);
+            --border-accent: rgba(0,212,255,0.3);
+            --font-display: 'Instrument Serif', Georgia, serif;
+            --font-body: 'DM Sans', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --glow-cyan: 0 0 60px rgba(0,212,255,0.15);
+            --glow-gold: 0 0 60px rgba(251,191,36,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.25rem 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .nav.scrolled {
+            background: rgba(10, 11, 13, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--accent-primary);
+            text-decoration: none;
+            letter-spacing: 0.15em;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-accent);
+            transition: all 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            background: rgba(0,212,255,0.1);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            padding: 0.6rem 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0.4rem;
+            left: 1rem;
+            right: 1rem;
+            height: 1px;
+            background: var(--accent-primary);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: 1px solid var(--border-subtle);
+            cursor: pointer;
+            padding: 0.75rem;
+            width: 44px;
+            height: 44px;
+            position: relative;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 18px;
+            height: 1px;
+            background: var(--text-primary);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: 0.3s;
+        }
+
+        .nav-toggle span:nth-child(1) { top: 15px; }
+        .nav-toggle span:nth-child(2) { top: 21px; }
+        .nav-toggle span:nth-child(3) { top: 27px; }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 8rem 3rem 6rem;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(ellipse at center, rgba(0,212,255,0.08) 0%, transparent 60%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 60%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(251,191,36,0.04) 0%, transparent 60%);
+            animation: pulse 10s ease-in-out infinite 2s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse at 60% 40%, black 20%, transparent 70%);
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            position: relative;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent-primary);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards 0.2s;
+        }
+
+        .hero-label::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent-primary), transparent);
+        }
+
+        .hero-name {
+            font-family: var(--font-display);
+            font-size: clamp(3.5rem, 7vw, 6rem);
+            font-weight: 400;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.75rem;
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards 0.4s;
+        }
+
+        .hero-name .accent {
+            color: var(--accent-gold);
+            font-style: italic;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards 0.6s;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 520px;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards 0.8s;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards 1s;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow-cyan), 0 10px 40px -10px rgba(0,212,255,0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-muted);
+            background: rgba(255,255,255,0.03);
+        }
+
+        .btn-arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover .btn-arrow {
+            transform: translateX(4px);
+        }
+
+        /* Hero Stats */
+        .hero-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards 1.2s;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 2rem 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-gold));
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-number .plus {
+            color: var(--accent-primary);
+        }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+        }
+
+        .stat-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem 3rem;
+            position: relative;
+        }
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 5rem;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: var(--accent-primary);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            max-width: 600px;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--bg-secondary);
+        }
+
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 6rem;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.75rem;
+            line-height: 1.85;
+        }
+
+        .about-content p:first-of-type::first-letter {
+            font-family: var(--font-display);
+            font-size: 4.5rem;
+            float: left;
+            line-height: 0.8;
+            padding-right: 1rem;
+            padding-top: 0.5rem;
+            color: var(--accent-primary);
+        }
+
+        .about-highlights {
+            position: relative;
+        }
+
+        .highlight-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 2.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .highlight-card:hover {
+            border-color: var(--border-accent);
+            transform: translateX(8px);
+        }
+
+        .highlight-card::before {
+            content: '';
+            position: absolute;
+            top: 1.5rem;
+            left: -1px;
+            width: 3px;
+            height: 30px;
+            background: var(--accent-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .highlight-card:hover::before {
+            opacity: 1;
+        }
+
+        .highlight-icon {
+            width: 32px;
+            height: 32px;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        .highlight-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Expertise Section */
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .expertise-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .expertise-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-gold));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .expertise-card:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.5);
+        }
+
+        .expertise-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .expertise-number {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent-primary);
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .expertise-icon {
+            width: 40px;
+            height: 40px;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .expertise-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .expertise-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* Experience Section */
+        .experience {
+            background: var(--bg-secondary);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-gold), var(--accent-violet));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 13px;
+            height: 13px;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-primary);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-marker {
+            background: var(--accent-primary);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .timeline-company {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-role {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-location {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-achievements {
+            list-style: none;
+        }
+
+        .timeline-achievements li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .timeline-achievements li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.7rem;
+            width: 6px;
+            height: 1px;
+            background: var(--accent-gold);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+
+        .skills-category {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 2.5rem;
+        }
+
+        .skills-category h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .skills-category h3::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-subtle);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        /* Publications Section */
+        .publications {
+            background: var(--bg-secondary);
+        }
+
+        .publication-list {
+            max-width: 900px;
+        }
+
+        .publication-item {
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .publication-item:first-child {
+            padding-top: 0;
+        }
+
+        .publication-item:last-child {
+            border-bottom: none;
+        }
+
+        .publication-year {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            line-height: 1;
+        }
+
+        .publication-content h4 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+
+        .publication-meta {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .publication-journal {
+            color: var(--accent-gold);
+            font-style: normal;
+        }
+
+        /* Contact Section */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 6rem;
+        }
+
+        .contact-info h3 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .contact-method-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .contact-method-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-primary);
+        }
+
+        .contact-method-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-method-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-method-value {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a.contact-method-value:hover {
+            color: var(--accent-primary);
+        }
+
+        .contact-protected {
+            cursor: pointer;
+        }
+
+        .contact-protected .reveal-text {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-primary);
+            border-bottom: 1px dashed var(--accent-primary);
+            padding-bottom: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-protected:hover .reveal-text {
+            color: var(--accent-gold);
+            border-color: var(--accent-gold);
+        }
+
+        .contact-protected.revealed {
+            cursor: default;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .social-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .social-card:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-4px);
+        }
+
+        .social-card svg {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .social-card.linkedin svg { color: #0077b5; }
+        .social-card.substack svg { color: #ff6719; }
+        .social-card.youtube svg { color: #ff0000; }
+        .social-card.x svg { color: #ffffff; }
+        .social-card.github svg { color: #ffffff; }
+
+        .social-card span {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-subtle);
+            padding: 4rem 3rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-name {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+        }
+
+        .footer-tagline {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer-copyright {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .hero-stats {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .stat-card {
+                flex: 1;
+                min-width: 250px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            section {
+                padding: 5rem 2rem;
+            }
+
+            .nav-inner {
+                padding: 0 2rem;
+            }
+
+            .about-layout {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-layout {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 7rem 1.5rem 4rem;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-primary);
+                flex-direction: column;
+                padding: 2rem;
+                border-bottom: 1px solid var(--border-subtle);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .publication-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .publication-year {
+                font-size: 1.5rem;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+        }
+
+        /* Scientific Background Decorations */
+        .sci-bg-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .sci-deco {
+            position: absolute;
+            color: var(--accent-primary);
+            opacity: 0.3;
+            transition: opacity 0.5s ease;
+        }
+
+        /* DNA Double Helix - left side */
+        .sci-helix {
+            width: 100px;
+            height: 340px;
+            top: 8%;
+            left: 2%;
+            opacity: 0.25;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        /* AAV Capsid - top right */
+        .sci-aav {
+            width: 200px;
+            height: 200px;
+            top: 3%;
+            right: 3%;
+            color: var(--accent-gold);
+            opacity: 0.28;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        /* IgG Antibody - bottom left */
+        .sci-protein {
+            width: 200px;
+            height: 180px;
+            bottom: 8%;
+            left: 1%;
+            opacity: 0.25;
+            animation: float 22s ease-in-out infinite 2s;
+        }
+
+        /* mRNA - top center */
+        .sci-mrna {
+            width: 280px;
+            height: 70px;
+            top: 35%;
+            right: 8%;
+            color: var(--accent-violet);
+            opacity: 0.25;
+            animation: float 18s ease-in-out infinite 1s;
+        }
+
+        /* LNP - bottom right */
+        .sci-lnp {
+            width: 160px;
+            height: 160px;
+            bottom: 3%;
+            right: 2%;
+            color: var(--accent-gold);
+            opacity: 0.28;
+            animation: float 18s ease-in-out infinite 3s;
+        }
+
+        /* Alpha Helix - right side middle */
+        .sci-helix-2 {
+            width: 70px;
+            height: 220px;
+            top: 55%;
+            right: 1%;
+            opacity: 0.22;
+            transform: translateY(-50%);
+            animation: float 24s ease-in-out infinite 5s;
+        }
+
+        /* Adenine nucleotide - left middle */
+        .sci-mol-2 {
+            width: 100px;
+            height: 85px;
+            top: 50%;
+            left: 3%;
+            color: var(--accent-gold);
+            opacity: 0.25;
+            animation: float 30s ease-in-out infinite reverse 2s;
+        }
+
+        /* Beta sheet - bottom center-right */
+        .sci-protein-2 {
+            width: 140px;
+            height: 110px;
+            bottom: 30%;
+            right: 15%;
+            color: var(--accent-violet);
+            opacity: 0.22;
+            animation: float 28s ease-in-out infinite 6s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-20px) rotate(2deg);
+            }
+            50% {
+                transform: translateY(0) rotate(0deg);
+            }
+            75% {
+                transform: translateY(20px) rotate(-2deg);
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Hide on mobile for performance */
+        @media (max-width: 768px) {
+            .sci-bg-elements {
+                display: none;
+            }
+        }
+
+        /* Scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Scientific Background Decorations -->
+    <div class="sci-bg-elements" aria-hidden="true">
+
+        <!-- DNA Double Helix - Accurate B-form structure with major/minor grooves -->
+        <svg class="sci-deco sci-helix" viewBox="0 0 120 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Left backbone (phosphate-sugar) -->
+            <path d="M25 0 C75 25, 75 55, 25 80 C-25 105, -25 135, 25 160 C75 185, 75 215, 25 240 C-25 265, -25 295, 25 320 C75 345, 75 375, 25 400" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <!-- Right backbone -->
+            <path d="M95 0 C45 25, 45 55, 95 80 C145 105, 145 135, 95 160 C45 185, 45 215, 95 240 C145 265, 145 295, 95 320 C45 345, 45 375, 95 400" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <!-- Base pairs (A-T and G-C) -->
+            <!-- A-T pair (2 H-bonds) -->
+            <line x1="30" y1="20" x2="90" y2="20" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="30" cy="20" r="6" fill="currentColor" opacity="0.8"/>
+            <circle cx="90" cy="20" r="4" fill="currentColor" opacity="0.6"/>
+            <!-- G-C pair (3 H-bonds) -->
+            <line x1="55" y1="50" x2="65" y2="50" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="50" y1="48" x2="70" y2="48" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+            <line x1="50" y1="52" x2="70" y2="52" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+            <circle cx="45" cy="50" r="5" fill="currentColor" opacity="0.7"/>
+            <circle cx="75" cy="50" r="5" fill="currentColor" opacity="0.7"/>
+            <!-- More base pairs -->
+            <line x1="25" y1="80" x2="95" y2="80" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="25" cy="80" r="5" fill="currentColor" opacity="0.7"/>
+            <circle cx="95" cy="80" r="6" fill="currentColor" opacity="0.8"/>
+            <line x1="30" y1="110" x2="90" y2="110" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="25" y1="140" x2="95" y2="140" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="25" cy="140" r="4" fill="currentColor" opacity="0.6"/>
+            <circle cx="95" cy="140" r="6" fill="currentColor" opacity="0.8"/>
+            <line x1="25" y1="160" x2="95" y2="160" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="30" y1="190" x2="90" y2="190" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="30" cy="190" r="5" fill="currentColor" opacity="0.7"/>
+            <circle cx="90" cy="190" r="5" fill="currentColor" opacity="0.7"/>
+            <line x1="55" y1="220" x2="65" y2="220" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="25" y1="240" x2="95" y2="240" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="25" cy="240" r="6" fill="currentColor" opacity="0.8"/>
+            <circle cx="95" cy="240" r="4" fill="currentColor" opacity="0.6"/>
+            <line x1="30" y1="270" x2="90" y2="270" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="25" y1="300" x2="95" y2="300" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="25" y1="320" x2="95" y2="320" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="25" cy="320" r="5" fill="currentColor" opacity="0.7"/>
+            <circle cx="95" cy="320" r="5" fill="currentColor" opacity="0.7"/>
+            <line x1="30" y1="350" x2="90" y2="350" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="55" y1="380" x2="65" y2="380" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+
+        <!-- AAV Capsid - Accurate icosahedral T=1 with VP proteins -->
+        <svg class="sci-deco sci-aav" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer icosahedral shell -->
+            <polygon points="100,8 170,40 190,100 170,160 100,192 30,160 10,100 30,40" stroke="currentColor" stroke-width="2" fill="none"/>
+            <!-- Triangular faces (T=1 symmetry) -->
+            <polygon points="100,8 170,40 100,100" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <polygon points="170,40 190,100 100,100" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.5"/>
+            <polygon points="190,100 170,160 100,100" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.4"/>
+            <polygon points="170,160 100,192 100,100" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.5"/>
+            <polygon points="100,192 30,160 100,100" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <polygon points="30,160 10,100 100,100" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.5"/>
+            <polygon points="10,100 30,40 100,100" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.4"/>
+            <polygon points="30,40 100,8 100,100" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.5"/>
+            <!-- VP protein subunits at vertices -->
+            <circle cx="100" cy="8" r="8" fill="currentColor" opacity="0.8"/>
+            <circle cx="170" cy="40" r="8" fill="currentColor" opacity="0.8"/>
+            <circle cx="190" cy="100" r="8" fill="currentColor" opacity="0.8"/>
+            <circle cx="170" cy="160" r="8" fill="currentColor" opacity="0.8"/>
+            <circle cx="100" cy="192" r="8" fill="currentColor" opacity="0.8"/>
+            <circle cx="30" cy="160" r="8" fill="currentColor" opacity="0.8"/>
+            <circle cx="10" cy="100" r="8" fill="currentColor" opacity="0.8"/>
+            <circle cx="30" cy="40" r="8" fill="currentColor" opacity="0.8"/>
+            <!-- 5-fold axis at center -->
+            <circle cx="100" cy="100" r="12" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <circle cx="100" cy="100" r="5" fill="currentColor" opacity="0.5"/>
+            <!-- ssDNA genome inside (indicated) -->
+            <path d="M70 90 Q85 80, 100 90 Q115 100, 130 90" stroke="currentColor" stroke-width="1" fill="none" opacity="0.4"/>
+            <path d="M75 110 Q90 120, 105 110 Q120 100, 125 110" stroke="currentColor" stroke-width="1" fill="none" opacity="0.4"/>
+        </svg>
+
+        <!-- IgG Antibody - Accurate structure with Fab, Fc, hinge, and CDRs -->
+        <svg class="sci-deco sci-protein" viewBox="0 0 220 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Heavy chains (backbone) -->
+            <path d="M110 185 L110 130" stroke="currentColor" stroke-width="3" fill="none"/>
+            <!-- Hinge region (flexible) -->
+            <path d="M110 130 C110 120, 100 115, 90 110" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <path d="M110 130 C110 120, 120 115, 130 110" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <!-- Left Fab arm -->
+            <path d="M90 110 L55 55 L35 20" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <!-- Right Fab arm -->
+            <path d="M130 110 L165 55 L185 20" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <!-- Left Fab VH-VL domain -->
+            <ellipse cx="35" cy="20" rx="28" ry="18" stroke="currentColor" stroke-width="2" fill="none"/>
+            <!-- Left CDR loops (antigen binding) -->
+            <path d="M18 12 Q15 5, 22 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <path d="M35 5 Q35 0, 40 5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <path d="M48 12 Q55 8, 52 15" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <!-- Right Fab VH-VL domain -->
+            <ellipse cx="185" cy="20" rx="28" ry="18" stroke="currentColor" stroke-width="2" fill="none"/>
+            <!-- Right CDR loops -->
+            <path d="M168 12 Q165 5, 172 8" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <path d="M185 5 Q185 0, 190 5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <path d="M198 12 Q205 8, 202 15" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <!-- CH1 domains -->
+            <ellipse cx="55" cy="55" rx="15" ry="12" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.7"/>
+            <ellipse cx="165" cy="55" rx="15" ry="12" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.7"/>
+            <!-- Fc region (CH2-CH3) -->
+            <ellipse cx="110" cy="160" rx="20" ry="28" stroke="currentColor" stroke-width="2" fill="none"/>
+            <!-- Glycosylation site on Fc (N297) -->
+            <circle cx="100" cy="155" r="4" fill="currentColor" opacity="0.6"/>
+            <circle cx="120" cy="155" r="4" fill="currentColor" opacity="0.6"/>
+            <!-- Disulfide bonds in hinge -->
+            <line x1="95" y1="125" x2="125" y2="125" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="95" y1="120" x2="125" y2="120" stroke="currentColor" stroke-width="1" stroke-dasharray="3,2"/>
+        </svg>
+
+        <!-- mRNA with 5' Cap, UTRs, ORF, and Poly-A tail -->
+        <svg class="sci-deco sci-mrna" viewBox="0 0 300 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- 5' Cap (m7G) -->
+            <circle cx="20" cy="40" r="12" stroke="currentColor" stroke-width="2" fill="none"/>
+            <text x="14" y="44" font-size="8" fill="currentColor" opacity="0.8">m7G</text>
+            <!-- 5' UTR -->
+            <path d="M32 40 Q50 30, 70 40 Q90 50, 110 40" stroke="currentColor" stroke-width="2" fill="none"/>
+            <!-- Start codon (AUG) -->
+            <rect x="108" y="32" width="20" height="16" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.8"/>
+            <text x="110" y="43" font-size="7" fill="currentColor" opacity="0.7">AUG</text>
+            <!-- Open Reading Frame (ORF) - coding region -->
+            <path d="M128 40 L200 40" stroke="currentColor" stroke-width="3" fill="none"/>
+            <path d="M135 35 L145 35 M155 35 L165 35 M175 35 L185 35" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+            <path d="M140 45 L150 45 M160 45 L170 45 M180 45 L190 45" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+            <!-- Stop codon -->
+            <rect x="200" y="32" width="20" height="16" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.8"/>
+            <text x="202" y="43" font-size="7" fill="currentColor" opacity="0.7">UAA</text>
+            <!-- 3' UTR -->
+            <path d="M220 40 Q235 50, 250 40 Q265 30, 280 40" stroke="currentColor" stroke-width="2" fill="none"/>
+            <!-- Poly-A tail -->
+            <circle cx="290" cy="40" r="3" fill="currentColor" opacity="0.8"/>
+            <circle cx="298" cy="40" r="3" fill="currentColor" opacity="0.7"/>
+            <circle cx="306" cy="40" r="3" fill="currentColor" opacity="0.6"/>
+            <circle cx="314" cy="40" r="3" fill="currentColor" opacity="0.5"/>
+            <circle cx="322" cy="40" r="3" fill="currentColor" opacity="0.4"/>
+            <!-- Ribosomes translating -->
+            <ellipse cx="150" cy="55" rx="12" ry="8" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
+            <ellipse cx="175" cy="55" rx="12" ry="8" stroke="currentColor" stroke-width="1" fill="none" opacity="0.4"/>
+        </svg>
+
+        <!-- LNP (Lipid Nanoparticle) - Accurate bilayer with ionizable lipids and mRNA cargo -->
+        <svg class="sci-deco sci-lnp" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer lipid layer -->
+            <circle cx="90" cy="90" r="75" stroke="currentColor" stroke-width="2" fill="none"/>
+            <!-- Inner lipid layer -->
+            <circle cx="90" cy="90" r="60" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.7"/>
+            <!-- Lipid headgroups (outer) - phospholipids with PEG -->
+            <circle cx="90" cy="15" r="5" fill="currentColor" opacity="0.8"/>
+            <line x1="90" y1="20" x2="90" y2="35" stroke="currentColor" stroke-width="1"/>
+            <circle cx="45" cy="30" r="5" fill="currentColor" opacity="0.8"/>
+            <line x1="50" y1="33" x2="60" y2="45" stroke="currentColor" stroke-width="1"/>
+            <circle cx="20" cy="65" r="5" fill="currentColor" opacity="0.8"/>
+            <line x1="25" y1="67" x2="38" y2="72" stroke="currentColor" stroke-width="1"/>
+            <circle cx="15" cy="110" r="5" fill="currentColor" opacity="0.8"/>
+            <line x1="20" y1="108" x2="35" y2="100" stroke="currentColor" stroke-width="1"/>
+            <circle cx="35" cy="150" r="5" fill="currentColor" opacity="0.8"/>
+            <line x1="40" y1="145" x2="52" y2="135" stroke="currentColor" stroke-width="1"/>
+            <circle cx="90" cy="165" r="5" fill="currentColor" opacity="0.8"/>
+            <line x1="90" y1="160" x2="90" y2="145" stroke="currentColor" stroke-width="1"/>
+            <circle cx="145" cy="150" r="5" fill="currentColor" opacity="0.8"/>
+            <line x1="140" y1="145" x2="128" y2="135" stroke="currentColor" stroke-width="1"/>
+            <circle cx="165" cy="110" r="5" fill="currentColor" opacity="0.8"/>
+            <line x1="160" y1="108" x2="145" y2="100" stroke="currentColor" stroke-width="1"/>
+            <circle cx="160" cy="65" r="5" fill="currentColor" opacity="0.8"/>
+            <line x1="155" y1="67" x2="142" y2="72" stroke="currentColor" stroke-width="1"/>
+            <circle cx="135" cy="30" r="5" fill="currentColor" opacity="0.8"/>
+            <line x1="130" y1="33" x2="120" y2="45" stroke="currentColor" stroke-width="1"/>
+            <!-- PEG chains (a few extending out) -->
+            <path d="M90 10 Q92 0, 95 5 Q98 -2, 100 3" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+            <path d="M165 60 Q175 55, 172 50 Q180 48, 178 42" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+            <!-- mRNA cargo inside (condensed) -->
+            <path d="M55 85 Q70 70, 90 85 Q110 100, 125 85" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <path d="M60 100 Q80 115, 100 100 Q120 85, 130 100" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.5"/>
+            <circle cx="55" cy="85" r="3" fill="currentColor" opacity="0.5"/>
+            <circle cx="90" cy="85" r="3" fill="currentColor" opacity="0.5"/>
+            <circle cx="125" cy="85" r="3" fill="currentColor" opacity="0.5"/>
+        </svg>
+
+        <!-- Alpha Helix secondary structure -->
+        <svg class="sci-deco sci-helix-2" viewBox="0 0 80 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Alpha helix ribbon -->
+            <path d="M20 10 Q60 25, 20 50 Q-20 75, 20 100 Q60 125, 20 150 Q-20 175, 20 200 Q60 225, 20 250" stroke="currentColor" stroke-width="3" fill="none"/>
+            <!-- Amino acid residues (3.6 per turn) -->
+            <circle cx="20" cy="10" r="5" fill="currentColor" opacity="0.8"/>
+            <circle cx="45" cy="22" r="4" fill="currentColor" opacity="0.7"/>
+            <circle cx="50" cy="38" r="4" fill="currentColor" opacity="0.7"/>
+            <circle cx="30" cy="50" r="5" fill="currentColor" opacity="0.8"/>
+            <circle cx="5" cy="62" r="4" fill="currentColor" opacity="0.7"/>
+            <circle cx="0" cy="78" r="4" fill="currentColor" opacity="0.7"/>
+            <circle cx="20" cy="100" r="5" fill="currentColor" opacity="0.8"/>
+            <circle cx="45" cy="112" r="4" fill="currentColor" opacity="0.7"/>
+            <circle cx="50" cy="128" r="4" fill="currentColor" opacity="0.7"/>
+            <circle cx="30" cy="150" r="5" fill="currentColor" opacity="0.8"/>
+            <circle cx="5" cy="162" r="4" fill="currentColor" opacity="0.7"/>
+            <circle cx="0" cy="178" r="4" fill="currentColor" opacity="0.7"/>
+            <circle cx="20" cy="200" r="5" fill="currentColor" opacity="0.8"/>
+            <!-- H-bonds (i to i+4) shown as dashed -->
+            <line x1="20" y1="15" x2="5" y2="58" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2,2" opacity="0.4"/>
+            <line x1="45" y1="27" x2="0" y2="73" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2,2" opacity="0.4"/>
+            <line x1="20" y1="105" x2="5" y2="158" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2,2" opacity="0.4"/>
+        </svg>
+
+        <!-- Adenine nucleotide (accurate structure) -->
+        <svg class="sci-deco sci-mol-2" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Adenine base (purine - 2 fused rings) -->
+            <!-- 6-membered ring -->
+            <path d="M50 20 L70 10 L90 20 L90 40 L70 50 L50 40 Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <!-- 5-membered ring (fused) -->
+            <path d="M90 20 L105 35 L90 40" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <path d="M90 20 Q110 25, 105 35" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <!-- NH2 group -->
+            <line x1="70" y1="10" x2="70" y2="0" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="70" cy="0" r="4" fill="currentColor" opacity="0.6"/>
+            <!-- N atoms in ring -->
+            <circle cx="50" cy="20" r="3" fill="currentColor" opacity="0.7"/>
+            <circle cx="50" cy="40" r="3" fill="currentColor" opacity="0.7"/>
+            <circle cx="90" cy="40" r="3" fill="currentColor" opacity="0.7"/>
+            <circle cx="105" cy="35" r="3" fill="currentColor" opacity="0.7"/>
+            <!-- Ribose sugar (5-membered) -->
+            <path d="M50 40 L40 55 L45 70 L60 70 L60 55 Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <circle cx="45" cy="70" r="2" fill="currentColor" opacity="0.5"/>
+            <!-- Phosphate groups (ATP would have 3) -->
+            <circle cx="30" cy="80" r="6" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <line x1="40" y1="73" x2="35" y2="76" stroke="currentColor" stroke-width="1"/>
+            <circle cx="18" cy="88" r="5" stroke="currentColor" stroke-width="1" fill="none" opacity="0.7"/>
+            <line x1="25" y1="84" x2="22" y2="86" stroke="currentColor" stroke-width="1"/>
+        </svg>
+
+        <!-- Beta sheet structure -->
+        <svg class="sci-deco sci-protein-2" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Beta strands (arrows) -->
+            <!-- Strand 1 -->
+            <path d="M10 20 L120 20" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <polygon points="120,20 130,15 130,25" fill="currentColor" opacity="0.8"/>
+            <!-- Strand 2 (antiparallel) -->
+            <path d="M130 50 L20 50" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <polygon points="20,50 10,45 10,55" fill="currentColor" opacity="0.8"/>
+            <!-- Strand 3 -->
+            <path d="M10 80 L120 80" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <polygon points="120,80 130,75 130,85" fill="currentColor" opacity="0.8"/>
+            <!-- Strand 4 (antiparallel) -->
+            <path d="M130 110 L20 110" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <polygon points="20,110 10,105 10,115" fill="currentColor" opacity="0.8"/>
+            <!-- H-bonds between strands -->
+            <line x1="30" y1="25" x2="30" y2="45" stroke="currentColor" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.5"/>
+            <line x1="60" y1="25" x2="60" y2="45" stroke="currentColor" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.5"/>
+            <line x1="90" y1="25" x2="90" y2="45" stroke="currentColor" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.5"/>
+            <line x1="30" y1="55" x2="30" y2="75" stroke="currentColor" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.5"/>
+            <line x1="60" y1="55" x2="60" y2="75" stroke="currentColor" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.5"/>
+            <line x1="90" y1="55" x2="90" y2="75" stroke="currentColor" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.5"/>
+            <line x1="30" y1="85" x2="30" y2="105" stroke="currentColor" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.5"/>
+            <line x1="60" y1="85" x2="60" y2="105" stroke="currentColor" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.5"/>
+            <line x1="90" y1="85" x2="90" y2="105" stroke="currentColor" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.5"/>
+            <!-- Side chains (R groups) alternating up/down -->
+            <line x1="45" y1="20" x2="45" y2="8" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+            <line x1="75" y1="20" x2="75" y2="8" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+            <line x1="45" y1="50" x2="45" y2="62" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+            <line x1="75" y1="50" x2="75" y2="62" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+        </svg>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">EJY.PHD</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#expertise">Expertise</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#publications">Publications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+        <div class="hero-bg">
+            <div class="hero-grid"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <p class="hero-label">Analytical Development Leader</p>
+                <h1 class="hero-name">Eric J. Yearley<span class="accent">, PhD</span></h1>
+                <p class="hero-title">Biologics · Vaccines · Gene Therapy</p>
+                <p class="hero-description">
+                    Distinguished leader with comprehensive experience developing analytical control strategies
+                    for complex biologics, from monoclonal antibodies to mRNA-LNP platforms and viral vector gene therapies.
+                </p>
+                <div class="hero-cta">
+                    <a href="#contact" class="btn btn-primary">
+                        Get in Touch
+                        <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="#experience" class="btn btn-secondary">View Experience</a>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number">13<span class="plus">+</span></div>
+                    <div class="stat-label">Years of Experience</div>
+                    <p class="stat-description">Leading analytical development for cutting-edge therapeutic modalities</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">98<span class="plus">%</span></div>
+                    <div class="stat-label">Deviation Reduction</div>
+                    <p class="stat-description">Achieved through ELN implementation and digital transformation</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About -->
+    <section id="about" class="about">
+        <div class="section-container">
+            <header class="section-header">
+                <p class="section-label">01 — About</p>
+                <h2 class="section-title">Building the analytical<br>foundation for breakthrough<br>therapeutics</h2>
+            </header>
+            <div class="about-layout">
+                <div class="about-content">
+                    <p>Throughout my career, I have built and led analytical development organizations responsible for characterizing some of the most complex therapeutic modalities in the pharmaceutical industry. From recombinant protein vaccines to cutting-edge mRNA-LNP platforms and AAV gene therapies, I've developed the analytical strategies that enable these life-changing treatments to reach patients.</p>
+                    <p>My expertise spans the complete analytical lifecycle—from early method development through validation, transfer, and commercial implementation. I take pride in building high-performing teams, implementing digital transformation initiatives, and driving operational excellence while maintaining rigorous regulatory compliance.</p>
+                    <p>With a PhD in Chemistry specializing in X-ray Crystallography and postdoctoral experience at Genentech, I bring a deep scientific foundation combined with practical industry experience across companies including CSL Seqirus, BridgeBio Gene Therapy, GSK Vaccines, and MacroGenics.</p>
+                </div>
+                <aside class="about-highlights">
+                    <div class="highlight-card">
+                        <svg class="highlight-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                        </svg>
+                        <h4>Team Leadership</h4>
+                        <p>Led teams of 10+ scientists across multiple disciplines</p>
+                    </div>
+                    <div class="highlight-card">
+                        <svg class="highlight-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                        </svg>
+                        <h4>Regulatory Excellence</h4>
+                        <p>Authored CMC sections for IND, BLA, MAA, and IMPD submissions</p>
+                    </div>
+                    <div class="highlight-card">
+                        <svg class="highlight-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                        </svg>
+                        <h4>Digital Innovation</h4>
+                        <p>98% reduction in lab deviations through ELN implementation</p>
+                    </div>
+                    <div class="highlight-card">
+                        <svg class="highlight-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                        </svg>
+                        <h4>Vaccine Development</h4>
+                        <p>Contributed to Arexvy, GSK's first-in-class RSV vaccine</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise -->
+    <section id="expertise">
+        <div class="section-container">
+            <header class="section-header">
+                <p class="section-label">02 — Expertise</p>
+                <h2 class="section-title">Areas of Expertise</h2>
+                <p class="section-subtitle">Specialized capabilities across the analytical development lifecycle</p>
+            </header>
+            <div class="expertise-grid">
+                <article class="expertise-card reveal">
+                    <span class="expertise-number">01</span>
+                    <svg class="expertise-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                    </svg>
+                    <h3>Mass Spectrometry</h3>
+                    <p>Expert in LC-MS, LC-MS/MS, peptide mapping, and intact mass analysis for comprehensive protein characterization and post-translational modification monitoring.</p>
+                </article>
+                <article class="expertise-card reveal">
+                    <span class="expertise-number">02</span>
+                    <svg class="expertise-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                    <h3>Analytical Control Strategy</h3>
+                    <p>Development of comprehensive ACS frameworks aligned with ICH Q14, including CQA assessment, method lifecycle management, and specification setting per ICH Q6B.</p>
+                </article>
+                <article class="expertise-card reveal">
+                    <span class="expertise-number">03</span>
+                    <svg class="expertise-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
+                    </svg>
+                    <h3>Method Validation & Transfer</h3>
+                    <p>End-to-end method qualification and validation per ICH Q2(R2), with extensive experience in global CDMO transfers and multi-site implementation.</p>
+                </article>
+                <article class="expertise-card reveal">
+                    <span class="expertise-number">04</span>
+                    <svg class="expertise-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <h3>Bioassay Development</h3>
+                    <p>Cell-based potency assays, ELISA, immunofluorescence, and FACS-based methods for functional characterization of biologics and vaccines.</p>
+                </article>
+                <article class="expertise-card reveal">
+                    <span class="expertise-number">05</span>
+                    <svg class="expertise-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+                    </svg>
+                    <h3>Molecular Biology Methods</h3>
+                    <p>qPCR, ddPCR, and nucleic acid quantification methods for mRNA and viral vector characterization, including integrity and potency assessments.</p>
+                </article>
+                <article class="expertise-card reveal">
+                    <span class="expertise-number">06</span>
+                    <svg class="expertise-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                    </svg>
+                    <h3>Digital Transformation</h3>
+                    <p>ELN/LIMS implementation, AI-assisted technical writing, and laboratory automation initiatives driving 30%+ efficiency improvements.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="experience">
+        <div class="section-container">
+            <header class="section-header">
+                <p class="section-label">03 — Experience</p>
+                <h2 class="section-title">Professional Journey</h2>
+            </header>
+            <div class="timeline">
+                <article class="timeline-item reveal">
+                    <div class="timeline-marker"></div>
+                    <p class="timeline-date">July 2023 — Present</p>
+                    <h3 class="timeline-company">CSL Seqirus</h3>
+                    <p class="timeline-role">Associate Director: Cell, Molecular, Separations & CMC Analytical</p>
+                    <p class="timeline-location">Holly Springs, NC</p>
+                    <ul class="timeline-achievements">
+                        <li>Direct 13+ member analytical development organization with 5 direct reports and full P&L responsibility</li>
+                        <li>Co-delivered analytical control strategies for 3 clinical and 3 platform programs enabling critical product advancements</li>
+                        <li>Achieved 10x increase in fragment analyzer assay throughput and 7x increase in potency assay throughput</li>
+                        <li>Led ELN implementation reducing deviations from 150/year to 2-3/year (~98% reduction)</li>
+                        <li>Justified >$1M annual CAPEX and headcount requests aligned with portfolio priorities</li>
+                    </ul>
+                </article>
+                <article class="timeline-item reveal">
+                    <div class="timeline-marker"></div>
+                    <p class="timeline-date">September 2019 — July 2023</p>
+                    <h3 class="timeline-company">BridgeBio Gene Therapy</h3>
+                    <p class="timeline-role">Associate Director - Principal Scientist</p>
+                    <p class="timeline-location">Raleigh, NC</p>
+                    <ul class="timeline-achievements">
+                        <li>Managed 11+ direct and indirect reports; served on CMC leadership team</li>
+                        <li>Lead AD for novel pre-IND viral vector program—achieved IND-enabling tox material in 6 months</li>
+                        <li>Authored CMC sections for multiple IND submissions and FDA annual updates</li>
+                        <li>Co-led design of cGMP QC release testing facility for clinical batch release</li>
+                        <li>Implemented QbD framework defining CQAs, CPPs, and comparability strategy</li>
+                    </ul>
+                </article>
+                <article class="timeline-item reveal">
+                    <div class="timeline-marker"></div>
+                    <p class="timeline-date">2016 — 2019</p>
+                    <h3 class="timeline-company">GSK Vaccines</h3>
+                    <p class="timeline-role">Expert Scientist</p>
+                    <p class="timeline-location">Rockville, MD</p>
+                    <ul class="timeline-achievements">
+                        <li>Expert scientific and matrix leader for LC-MS, separations, biophysical and computational activities</li>
+                        <li>Critical analytical contributor to Arexvy (RSVPreF3 OA), GSK's first-in-class RSV vaccine</li>
+                        <li>Co-led design of Good Laboratory Practice Program; authored 10 GLP guidance documents</li>
+                        <li>Awarded two Silver Performance Awards for vital scientific contributions</li>
+                    </ul>
+                </article>
+                <article class="timeline-item reveal">
+                    <div class="timeline-marker"></div>
+                    <p class="timeline-date">2012 — 2016</p>
+                    <h3 class="timeline-company">MacroGenics, Inc.</h3>
+                    <p class="timeline-role">Scientist I in Pre-Clinical/Early Development</p>
+                    <p class="timeline-location">Rockville, MD</p>
+                    <ul class="timeline-achievements">
+                        <li>Established and managed protein LC/MS program for bispecific antibody and ADC characterization</li>
+                        <li>Led implementation of SEC-MALS and DSC technologies for enhanced characterization</li>
+                        <li>Supported computational modeling for antibody design through analytical insights</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+        <div class="section-container">
+            <header class="section-header">
+                <p class="section-label">04 — Skills</p>
+                <h2 class="section-title">Technical Competencies</h2>
+            </header>
+            <div class="skills-grid">
+                <div class="skills-category reveal">
+                    <h3>Analytical Technologies</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">RP-HPLC</span>
+                        <span class="skill-tag">SEC</span>
+                        <span class="skill-tag">IEX</span>
+                        <span class="skill-tag">HILIC</span>
+                        <span class="skill-tag">LC-MS</span>
+                        <span class="skill-tag">LC-MS/MS</span>
+                        <span class="skill-tag">Peptide Mapping</span>
+                        <span class="skill-tag">Intact Mass</span>
+                        <span class="skill-tag">qPCR</span>
+                        <span class="skill-tag">ddPCR</span>
+                        <span class="skill-tag">ELISA</span>
+                        <span class="skill-tag">FACS</span>
+                        <span class="skill-tag">CE-SDS</span>
+                        <span class="skill-tag">SEC-MALS</span>
+                        <span class="skill-tag">DSC</span>
+                        <span class="skill-tag">DLS</span>
+                        <span class="skill-tag">AUC</span>
+                    </div>
+                </div>
+                <div class="skills-category reveal">
+                    <h3>Product Categories</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">Monoclonal Antibodies</span>
+                        <span class="skill-tag">Bispecific Antibodies</span>
+                        <span class="skill-tag">ADCs</span>
+                        <span class="skill-tag">mRNA-LNP</span>
+                        <span class="skill-tag">AAV Gene Therapy</span>
+                        <span class="skill-tag">Recombinant Vaccines</span>
+                        <span class="skill-tag">Viral Vectors</span>
+                    </div>
+                </div>
+                <div class="skills-category reveal">
+                    <h3>Regulatory & Quality</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">cGMP</span>
+                        <span class="skill-tag">ICH Q14</span>
+                        <span class="skill-tag">ICH Q2(R2)</span>
+                        <span class="skill-tag">ICH Q6B</span>
+                        <span class="skill-tag">ICH Q5E</span>
+                        <span class="skill-tag">IND</span>
+                        <span class="skill-tag">BLA</span>
+                        <span class="skill-tag">MAA</span>
+                        <span class="skill-tag">ALCOA+</span>
+                        <span class="skill-tag">GSP</span>
+                    </div>
+                </div>
+                <div class="skills-category reveal">
+                    <h3>Leadership & Systems</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">Team Leadership (10+)</span>
+                        <span class="skill-tag">CDMO Management</span>
+                        <span class="skill-tag">ELN (IDBS)</span>
+                        <span class="skill-tag">LIMS (Labware)</span>
+                        <span class="skill-tag">AGILE/Scrum</span>
+                        <span class="skill-tag">AI Integration</span>
+                        <span class="skill-tag">Digital Transformation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications -->
+    <section id="publications" class="publications">
+        <div class="section-container">
+            <header class="section-header">
+                <p class="section-label">05 — Publications</p>
+                <h2 class="section-title">Select Publications</h2>
+            </header>
+            <div class="publication-list">
+                <article class="publication-item reveal">
+                    <div class="publication-year">2018</div>
+                    <div class="publication-content">
+                        <h4>Non-Enzymatic and Site-Specific Glycan Shedding: A Novel Protein Degradation Pathway Observed in a Stabilized Form of RSV Prefusion F Protein</h4>
+                        <p class="publication-meta">Qian, J.; Yearley, E.J. et al. — <span class="publication-journal">Analytical Chemistry</span></p>
+                    </div>
+                </article>
+                <article class="publication-item reveal">
+                    <div class="publication-year">2014</div>
+                    <div class="publication-content">
+                        <h4>Observation of Small Cluster Formation in Concentrated Monoclonal Antibody Solutions and Its Implications to Solution Viscosity</h4>
+                        <p class="publication-meta">Yearley, E.J. et al. — <span class="publication-journal">Biophysical Journal</span></p>
+                    </div>
+                </article>
+                <article class="publication-item reveal">
+                    <div class="publication-year">2013</div>
+                    <div class="publication-content">
+                        <h4>Small-Angle Neutron Scattering Characterization of Monoclonal Antibody Conformations and Interactions at High Concentrations</h4>
+                        <p class="publication-meta">Yearley, E.J. et al. — <span class="publication-journal">Biophysical Journal</span></p>
+                    </div>
+                </article>
+                <article class="publication-item reveal">
+                    <div class="publication-year">2007</div>
+                    <div class="publication-content">
+                        <h4>Binding of Genistein to the Estrogen Receptor Based on an Experimental Electron Density Study</h4>
+                        <p class="publication-meta">Yearley, E.J. et al. — <span class="publication-journal">Journal of the American Chemical Society</span></p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="section-container">
+            <header class="section-header">
+                <p class="section-label">06 — Contact</p>
+                <h2 class="section-title">Let's Connect</h2>
+            </header>
+            <div class="contact-layout">
+                <div class="contact-info">
+                    <h3>I'm always interested in discussing new opportunities in analytical development leadership.</h3>
+                    <p>Whether you're looking for expertise in biologics characterization, digital transformation, or building high-performing analytical teams—let's talk.</p>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="contact-method-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                                </svg>
+                            </div>
+                            <div class="contact-method-text">
+                                <span class="contact-method-label">Email</span>
+                                <a href="#" class="contact-method-value contact-protected" id="email-link" data-reveal="false" onclick="revealContact(this, 'email'); return false;">
+                                    <span class="reveal-text">Click to reveal</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="contact-method-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                                </svg>
+                            </div>
+                            <div class="contact-method-text">
+                                <span class="contact-method-label">Resume</span>
+                                <a href="CV_Resume_Eric J Yearley-24Dec2025-final.pdf" class="contact-method-value" download>Download PDF</a>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="contact-method-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                </svg>
+                            </div>
+                            <div class="contact-method-text">
+                                <span class="contact-method-label">Location</span>
+                                <span class="contact-method-value">Durham/Raleigh, NC · Open to Relocation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="social-grid">
+                    <a href="https://linkedin.com/in/yourprofile" class="social-card linkedin" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://yourname.substack.com" class="social-card substack" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/>
+                        </svg>
+                        <span>Substack</span>
+                    </a>
+                    <a href="https://youtube.com/@yourchannel" class="social-card youtube" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                        <span>YouTube</span>
+                    </a>
+                    <a href="https://x.com/yourhandle" class="social-card x" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                        <span>X / Twitter</span>
+                    </a>
+                    <a href="https://github.com/yourusername" class="social-card github" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        <span>GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <p class="footer-name">Eric J. Yearley, PhD</p>
+                <p class="footer-tagline">Analytical Development Leader · Biologics · Vaccines · Gene Therapy</p>
+            </div>
+            <nav class="footer-links">
+                <a href="#about">About</a>
+                <a href="#expertise">Expertise</a>
+                <a href="#experience">Experience</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <p class="footer-copyright">© 2024 Eric J. Yearley. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        const nav = document.querySelector('.nav');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // Mobile navigation toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile nav when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Reveal on scroll
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('active');
+                    }, index * 100);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Anti-scraping contact protection
+        // Email is encoded and only decoded on user interaction
+        // This prevents most email scrapers from harvesting the data
+        function revealContact(element, type) {
+            if (element.dataset.reveal === 'true') return;
+
+            // Obfuscated email - split and encoded to prevent scraping
+            const e1 = 'Y29udGFjdA=='; // contact
+            const e2 = 'QA=='; // @
+            const e3 = 'ZXJpY3llYXJsZXk='; // ericyearley
+            const e4 = 'LmNvbQ=='; // .com
+
+            if (type === 'email') {
+                const decoded = atob(e1) + atob(e2) + atob(e3) + atob(e4);
+                element.textContent = decoded;
+                element.href = 'mai' + 'lto:' + decoded;
+                element.classList.add('revealed');
+            }
+
+            element.dataset.reveal = 'true';
+        }
+    </script>
+</body>
+</html>
