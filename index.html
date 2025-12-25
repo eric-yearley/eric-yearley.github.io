@@ -839,6 +839,51 @@
             border-radius: 3px;
         }
 
+        .publication-item.featured {
+            border-left: 3px solid var(--accent-gold);
+            padding-left: 2rem;
+            margin-left: -2rem;
+        }
+
+        .publication-highlights {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(251, 191, 36, 0.05);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+            border-radius: 4px;
+        }
+
+        .highlight-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-gold);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-highlights ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .publication-highlights li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.3rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .publication-highlights li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+        }
+
         /* Contact Section */
         .contact-layout {
             display: grid;
@@ -1882,11 +1927,21 @@
                         <p class="publication-meta">Qian, J.; Yearley, E.J. et al. — <span class="publication-journal">Analytical Chemistry</span> <span class="citation-count">18 citations</span></p>
                     </div>
                 </article>
-                <article class="publication-item reveal">
+                <article class="publication-item reveal featured">
                     <div class="publication-year">2014</div>
                     <div class="publication-content">
                         <h4>Observation of Small Cluster Formation in Concentrated Monoclonal Antibody Solutions and Its Implications to Solution Viscosity</h4>
-                        <p class="publication-meta">Yearley, E.J. et al. — <span class="publication-journal">Biophysical Journal</span> <span class="citation-count">215 citations</span></p>
+                        <p class="publication-meta">Yearley, E.J. et al. — <span class="publication-journal">Biophysical Journal</span> 106(8), 1763-1770 <span class="citation-count">215 citations</span></p>
+                        <div class="publication-highlights">
+                            <span class="highlight-label">Featured in:</span>
+                            <ul>
+                                <li>Chemical & Engineering News — "Why Monoclonal Antibody Drugs Get Sticky"</li>
+                                <li>Department of Commerce, USA — "NIST Research Offers Guide in Formulating Cancer Treatment Drugs"</li>
+                                <li>NIST — "NIST Helps Cancer Treatment Drugs Get Past Their Sticking Point"</li>
+                                <li>Scientific Highlight, NIST Center for Neutron Research</li>
+                                <li>Scientific Highlight, Institut Laue-Langevin, France</li>
+                            </ul>
+                        </div>
                     </div>
                 </article>
                 <article class="publication-item reveal">
