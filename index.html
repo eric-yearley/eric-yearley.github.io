@@ -749,6 +749,109 @@
             background: var(--accent-gold);
         }
 
+        /* Case Studies Section */
+        .case-studies {
+            background: var(--bg-primary);
+        }
+
+        .case-studies-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+        }
+
+        .case-study-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .case-study-card:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-6px);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .case-study-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-gold));
+        }
+
+        .case-study-card:nth-child(2)::before {
+            background: linear-gradient(180deg, var(--accent-gold), var(--accent-violet));
+        }
+
+        .case-study-company {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        .case-study-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .case-study-challenge {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .case-study-approach {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--border-subtle);
+            line-height: 1.7;
+        }
+
+        .case-study-results {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .case-study-metric {
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            padding: 1rem 1.25rem;
+            border-radius: 4px;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .case-study-metric .metric-value {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            color: var(--accent-primary);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .case-study-metric .metric-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
         /* Skills Section */
         #skills {
             background: var(--bg-secondary);
@@ -1153,6 +1256,10 @@
             }
 
             .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .case-studies-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1649,6 +1756,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#expertise">Expertise</a></li>
                 <li><a href="#experience">Experience</a></li>
+                <li><a href="#case-studies">Case Studies</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#publications">Publications</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -1880,11 +1988,72 @@
         </div>
     </section>
 
+    <!-- Case Studies -->
+    <section id="case-studies" class="case-studies">
+        <div class="section-container">
+            <header class="section-header">
+                <p class="section-label">04 — Impact</p>
+                <h2 class="section-title">Case Studies</h2>
+                <p class="section-subtitle">Transformative analytical solutions that enabled program advancement</p>
+            </header>
+            <div class="case-studies-grid">
+                <article class="case-study-card reveal">
+                    <p class="case-study-company">CSL Seqirus</p>
+                    <h3>Flow Cytometry Potency Assay Optimization</h3>
+                    <p class="case-study-challenge">
+                        A critical potency assay was creating a bottleneck in vaccine development, with 200-sample campaigns requiring 8 months to complete—threatening program timelines for late-stage advancement.
+                    </p>
+                    <p class="case-study-approach">
+                        Through rigorous scientific analysis, I demonstrated that 2-3 data points in the linear region provided statistically equivalent results to full dose-response curves. This insight enabled a complete workflow redesign while maintaining 98% Right-First-Time quality.
+                    </p>
+                    <div class="case-study-results">
+                        <div class="case-study-metric">
+                            <span class="metric-value">4×</span>
+                            <span class="metric-label">Throughput Increase</span>
+                        </div>
+                        <div class="case-study-metric">
+                            <span class="metric-value">8→2</span>
+                            <span class="metric-label">Months per Campaign</span>
+                        </div>
+                        <div class="case-study-metric">
+                            <span class="metric-value">98%</span>
+                            <span class="metric-label">RFT Maintained</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="case-study-card reveal">
+                    <p class="case-study-company">BridgeBio Gene Therapy</p>
+                    <h3>ASPA Gene Therapy Analytical Platform</h3>
+                    <p class="case-study-challenge">
+                        BBP-812, an AAV9 gene therapy for Canavan disease, required a comprehensive analytical platform from scratch—including methods to confirm enzyme expression and demonstrate functional potency of the therapeutic protein.
+                    </p>
+                    <p class="case-study-approach">
+                        Led development of a complete analytical suite: LC-MS methods for protein characterization, SEC and CE methods for purity, and a novel two-stage potency approach—first confirming ASPA enzyme presence, then validating enzymatic activity. Achieved IND-enabling tox material in 6 months.
+                    </p>
+                    <div class="case-study-results">
+                        <div class="case-study-metric">
+                            <span class="metric-value">RMAT</span>
+                            <span class="metric-label">FDA Designation</span>
+                        </div>
+                        <div class="case-study-metric">
+                            <span class="metric-value">4</span>
+                            <span class="metric-label">Special Designations</span>
+                        </div>
+                        <div class="case-study-metric">
+                            <span class="metric-value">6 mo</span>
+                            <span class="metric-label">To IND-Enabling</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <!-- Skills -->
     <section id="skills">
         <div class="section-container">
             <header class="section-header">
-                <p class="section-label">04 — Skills</p>
+                <p class="section-label">05 — Skills</p>
                 <h2 class="section-title">Technical Competencies</h2>
             </header>
             <div class="skills-grid">
@@ -1964,7 +2133,7 @@
     <section id="publications" class="publications">
         <div class="section-container">
             <header class="section-header">
-                <p class="section-label">05 — Publications</p>
+                <p class="section-label">06 — Publications</p>
                 <h2 class="section-title">Publications</h2>
             </header>
             <div class="publication-list">
