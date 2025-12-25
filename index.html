@@ -957,30 +957,6 @@
             color: var(--accent-primary);
         }
 
-        .contact-protected {
-            cursor: pointer;
-        }
-
-        .contact-protected .reveal-text {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent-primary);
-            border-bottom: 1px dashed var(--accent-primary);
-            padding-bottom: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .contact-protected:hover .reveal-text {
-            color: var(--accent-gold);
-            border-color: var(--accent-gold);
-        }
-
-        .contact-protected.revealed {
-            cursor: default;
-        }
-
         .social-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -1645,7 +1621,7 @@
             </div>
             <div class="hero-stats">
                 <div class="stat-card">
-                    <div class="stat-number">13<span class="plus">+</span></div>
+                    <div class="stat-number">17<span class="plus">+</span></div>
                     <div class="stat-label">Years of Experience</div>
                     <p class="stat-description">Leading analytical development for cutting-edge therapeutic modalities</p>
                 </div>
@@ -1698,7 +1674,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
                         </svg>
                         <h4>Vaccine Development</h4>
-                        <p>Contributed to Arexvy, GSK's first-in-class RSV vaccine</p>
+                        <p>Contributed to early clinical development of Arexvy, GSK's RSV vaccine</p>
                     </div>
                 </aside>
             </div>
@@ -1760,8 +1736,8 @@
                     <svg class="expertise-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
                     </svg>
-                    <h3>Digital Transformation</h3>
-                    <p>ELN/LIMS implementation, AI-assisted technical writing, and laboratory automation initiatives driving 30%+ efficiency improvements.</p>
+                    <h3>Digital Transformation & AI</h3>
+                    <p>ELN/LIMS implementation, AI-powered analytical tools, RAG-based document systems, and laboratory automation initiatives driving 30%+ efficiency improvements.</p>
                 </article>
             </div>
         </div>
@@ -1811,7 +1787,7 @@
                     <p class="timeline-location">Rockville, MD</p>
                     <ul class="timeline-achievements">
                         <li>Expert scientific and matrix leader for LC-MS, separations, biophysical and computational activities</li>
-                        <li>Critical analytical contributor to Arexvy (RSVPreF3 OA), GSK's first-in-class RSV vaccine</li>
+                        <li>Critical analytical contributor to early clinical development of Arexvy (RSVPreF3 OA), GSK's RSV vaccine</li>
                         <li>Co-led design of Good Laboratory Practice Program; authored 10 GLP guidance documents</li>
                         <li>Awarded two Silver Performance Awards for vital scientific contributions</li>
                     </ul>
@@ -1899,6 +1875,13 @@
                         <span class="skill-tag">AGILE/Scrum</span>
                         <span class="skill-tag">AI Integration</span>
                         <span class="skill-tag">Digital Transformation</span>
+                    </div>
+                </div>
+                <div class="skills-category reveal">
+                    <h3>Education & Certifications</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">PhD Chemistry, Purdue University</span>
+                        <span class="skill-tag">MIT Sloan: AI in Pharma & Biotech (2024)</span>
                     </div>
                 </div>
             </div>
@@ -2031,9 +2014,7 @@
                             </div>
                             <div class="contact-method-text">
                                 <span class="contact-method-label">Email</span>
-                                <a href="#" class="contact-method-value contact-protected" id="email-link" data-reveal="false" onclick="revealContact(this, 'email'); return false;">
-                                    <span class="reveal-text">Click to reveal</span>
-                                </a>
+                                <span class="contact-method-value">contact at ericyearley dot com</span>
                             </div>
                         </div>
                         <div class="contact-method">
@@ -2044,7 +2025,7 @@
                             </div>
                             <div class="contact-method-text">
                                 <span class="contact-method-label">Resume</span>
-                                <a href="CV_Resume_Eric J Yearley-24Dec2025-final.pdf" class="contact-method-value" download>Download PDF</a>
+                                <a href="Resume_Eric J Yearley.pdf" class="contact-method-value" download>Download PDF</a>
                             </div>
                         </div>
                         <div class="contact-method">
@@ -2092,7 +2073,7 @@
                 <a href="#experience">Experience</a>
                 <a href="#contact">Contact</a>
             </nav>
-            <p class="footer-copyright">© 2024 Eric J. Yearley. All rights reserved.</p>
+            <p class="footer-copyright">© 2025 Eric J. Yearley. All rights reserved.</p>
         </div>
     </footer>
 
@@ -2160,27 +2141,6 @@
 
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // Anti-scraping contact protection
-        // Email is encoded and only decoded on user interaction
-        // This prevents most email scrapers from harvesting the data
-        function revealContact(element, type) {
-            if (element.dataset.reveal === 'true') return;
-
-            // Obfuscated email - split and encoded to prevent scraping
-            const e1 = 'Y29udGFjdA=='; // contact
-            const e2 = 'QA=='; // @
-            const e3 = 'ZXJpY3llYXJsZXk='; // ericyearley
-            const e4 = 'LmNvbQ=='; // .com
-
-            if (type === 'email') {
-                const decoded = atob(e1) + atob(e2) + atob(e3) + atob(e4);
-                element.textContent = decoded;
-                element.href = 'mai' + 'lto:' + decoded;
-                element.classList.add('revealed');
-            }
-
-            element.dataset.reveal = 'true';
-        }
     </script>
 </body>
 </html>
