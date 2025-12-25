@@ -1124,6 +1124,37 @@
             color: var(--accent-primary);
         }
 
+        .email-reveal-btn {
+            background: transparent;
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary);
+            padding: 0.4rem 0.8rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .email-reveal-btn:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .email-revealed {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .email-revealed a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+
+        .email-revealed a:hover {
+            text-decoration: underline;
+        }
+
         .social-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -2293,7 +2324,7 @@
                             </div>
                             <div class="contact-method-text">
                                 <span class="contact-method-label">Email</span>
-                                <span class="contact-method-value">contact at ericyearley dot com</span>
+                                <button class="email-reveal-btn" onclick="revealEmail(this)">Click to reveal email</button>
                             </div>
                         </div>
                         <div class="contact-method">
@@ -2419,6 +2450,16 @@
         });
 
         revealElements.forEach(el => revealObserver.observe(el));
+
+        // Email reveal function
+        function revealEmail(btn) {
+            const email = 'contact' + '@' + 'ericyearley' + '.' + 'com';
+            const container = document.createElement('span');
+            container.className = 'email-revealed';
+            container.innerHTML = '<a href="mailto:' + email + '">' + email + '</a>';
+            btn.parentNode.replaceChild(container, btn);
+        }
+        window.revealEmail = revealEmail;
 
     </script>
 </body>
