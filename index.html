@@ -176,6 +176,32 @@
         .nav-toggle span:nth-child(2) { top: 21px; }
         .nav-toggle span:nth-child(3) { top: 27px; }
 
+        .nav-resume {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--accent-primary);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-accent);
+            transition: all 0.3s ease;
+        }
+
+        .nav-resume:hover {
+            background: rgba(0,212,255,0.1);
+            box-shadow: var(--glow-cyan);
+            color: var(--text-primary);
+        }
+
+        .nav-resume svg {
+            flex-shrink: 0;
+        }
+
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -1139,6 +1165,10 @@
                 display: block;
             }
 
+            .nav-resume {
+                display: none;
+            }
+
             .hero-cta {
                 flex-direction: column;
             }
@@ -1587,6 +1617,12 @@
                 <li><a href="#publications">Publications</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <a href="Resume_Eric J Yearley.pdf" class="nav-resume" download>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                </svg>
+                Resume
+            </a>
             <button class="nav-toggle" aria-label="Toggle navigation">
                 <span></span>
                 <span></span>
