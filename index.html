@@ -391,59 +391,65 @@
             transform: translateX(4px);
         }
 
-        /* Hero Stats */
-        .hero-stats {
+        /* Hero Photo */
+        .hero-photo {
             display: flex;
-            flex-direction: column;
-            gap: 2rem;
+            justify-content: center;
+            align-items: center;
             opacity: 0;
             animation: slideUp 0.8s ease forwards 1.2s;
         }
 
-        .stat-card {
+        .hero-photo-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 3 / 4;
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            padding: 2rem 2.5rem;
-            position: relative;
             overflow: hidden;
         }
 
-        .stat-card::before {
+        .hero-photo-container::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 3px;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-gold));
+        }
+
+        .hero-photo-container img {
+            width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, var(--accent-primary), var(--accent-gold));
+            object-fit: cover;
+            object-position: center top;
         }
 
-        .stat-number {
-            font-family: var(--font-display);
-            font-size: 3.5rem;
-            font-weight: 400;
-            color: var(--text-primary);
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-number .plus {
-            color: var(--accent-primary);
-        }
-
-        .stat-label {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
+        .hero-photo-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             color: var(--text-muted);
+            gap: 1rem;
         }
 
-        .stat-description {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            margin-top: 1rem;
-            line-height: 1.6;
+        .hero-photo-placeholder svg {
+            width: 80px;
+            height: 80px;
+            opacity: 0.3;
+        }
+
+        .hero-photo-placeholder span {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.5;
         }
 
         @keyframes slideUp {
@@ -1262,14 +1268,12 @@
                 gap: 4rem;
             }
 
-            .hero-stats {
-                flex-direction: row;
-                flex-wrap: wrap;
+            .hero-photo {
+                order: -1;
             }
 
-            .stat-card {
-                flex: 1;
-                min-width: 250px;
+            .hero-photo-container {
+                max-width: 300px;
             }
 
             .skills-grid {
@@ -1838,16 +1842,15 @@
                     <a href="#experience" class="btn btn-secondary">View Experience</a>
                 </div>
             </div>
-            <div class="hero-stats">
-                <div class="stat-card">
-                    <div class="stat-number">13<span class="plus">+</span></div>
-                    <div class="stat-label">Years of Experience</div>
-                    <p class="stat-description">Leading analytical development for cutting-edge biologic modalities</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">7<span class="plus">+</span></div>
-                    <div class="stat-label">Programs</div>
-                    <p class="stat-description">Majority contributor or leader of analytical control strategies for clinical and platform programs</p>
+            <div class="hero-photo">
+                <div class="hero-photo-container">
+                    <!-- Replace placeholder with: <img src="profile.jpg" alt="Eric J. Yearley, PhD"> -->
+                    <div class="hero-photo-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                        </svg>
+                        <span>Photo coming soon</span>
+                    </div>
                 </div>
             </div>
         </div>
