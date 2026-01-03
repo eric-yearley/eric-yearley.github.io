@@ -398,6 +398,8 @@
             align-items: center;
             opacity: 0;
             animation: slideUp 0.8s ease forwards 1.2s;
+            position: relative;
+            z-index: 10;
         }
 
         .hero-photo-container {
@@ -408,6 +410,7 @@
             background: #4a4a4a;
             border: 1px solid var(--border-subtle);
             overflow: hidden;
+            isolation: isolate;
         }
 
         .hero-photo-container::before {
