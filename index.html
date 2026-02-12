@@ -3210,12 +3210,13 @@
 
         // ---- AI in Biotech News Feed ----
         (async function fetchNewsFeed() {
-            // v2 cache key — invalidates any old cached data
-            var CACHE_KEY = 'news_ai_biotech_v2';
+            // v3 cache key — invalidates stale cached error data
+            var CACHE_KEY = 'news_ai_biotech_v3';
             var NEWS_CACHE_TTL = 12 * 60 * 60 * 1000; // 12 hours
 
-            // Clear old cache key
+            // Clear old cache keys
             try { localStorage.removeItem('news_ai_biotech'); } catch {}
+            try { localStorage.removeItem('news_ai_biotech_v2'); } catch {}
 
             // Check cache
             try {
