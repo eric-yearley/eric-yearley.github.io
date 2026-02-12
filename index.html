@@ -3210,10 +3210,14 @@
 
         // ---- AI in Biotech News Feed ----
         (async function fetchNewsFeed() {
-            var CACHE_KEY = 'news_ai_biotech';
-            var NEWS_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours — daily updates
+            // v2 cache key — invalidates any old cached data
+            var CACHE_KEY = 'news_ai_biotech_v2';
+            var NEWS_CACHE_TTL = 12 * 60 * 60 * 1000; // 12 hours
 
-            // Check cache with shorter TTL
+            // Clear old cache key
+            try { localStorage.removeItem('news_ai_biotech'); } catch {}
+
+            // Check cache
             try {
                 var raw = localStorage.getItem(CACHE_KEY);
                 if (raw) {
@@ -3227,27 +3231,35 @@
 
             // Recency cutoffs
             var SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
-            var THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
+            var FOURTEEN_DAYS = 14 * 24 * 60 * 60 * 1000;
             var now = Date.now();
 
-            // Date range for Semantic Scholar (last 30 days to ensure enough results)
-            var ssDateFrom = new Date(now - THIRTY_DAYS).toISOString().slice(0, 10);
-            var ssDateTo = new Date().toISOString().slice(0, 10);
+            // Date strings for Semantic Scholar API
+            var ssFrom7 = new Date(now - SEVEN_DAYS).toISOString().slice(0, 10);
+            var ssFrom14 = new Date(now - FOURTEEN_DAYS).toISOString().slice(0, 10);
+            var ssTo = new Date().toISOString().slice(0, 10);
 
-            // --- NEWS: Google News — restrict to last 7 days with when:7d ---
+            // Helper: is this item from within the last N ms?
+            function isRecent(item, maxAge) {
+                var pubTime = new Date(item.pubDate).getTime();
+                // Reject items with no valid date
+                if (!pubTime || isNaN(pubTime)) return false;
+                return (now - pubTime) <= maxAge;
+            }
+
+            // --- NEWS: Google News ---
             var newsFeeds = [
-                'https://news.google.com/rss/search?q=AI+biotech+pharmaceutical+drug+development+when:7d&hl=en-US&gl=US&ceid=US:en',
-                'https://news.google.com/rss/search?q=artificial+intelligence+CMC+biologics+when:7d&hl=en-US&gl=US&ceid=US:en',
-                'https://news.google.com/rss/search?q=CMC+biologics+regulatory+pharmaceutical+when:7d&hl=en-US&gl=US&ceid=US:en'
+                'https://news.google.com/rss/search?q=AI+biotech+pharmaceutical+drug+development&hl=en-US&gl=US&ceid=US:en',
+                'https://news.google.com/rss/search?q=artificial+intelligence+CMC+biologics&hl=en-US&gl=US&ceid=US:en',
+                'https://news.google.com/rss/search?q=CMC+biologics+regulatory+pharmaceutical&hl=en-US&gl=US&ceid=US:en'
             ];
 
             try {
                 var allItems = [];
 
-                // Fetch news via rss2json
                 for (var i = 0; i < newsFeeds.length; i++) {
                     try {
-                        var apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(newsFeeds[i]) + '&count=10';
+                        var apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(newsFeeds[i]) + '&count=15';
                         var res = await fetch(apiUrl);
                         if (!res.ok) continue;
                         var data = await res.json();
@@ -3258,9 +3270,7 @@
                     } catch { continue; }
                 }
 
-                // --- PAPERS: Semantic Scholar — recent + high-relevance ---
-                // Recent papers won't have many citations, so sort by relevance
-                // and use publicationDateOrYear for recency
+                // --- PAPERS: Semantic Scholar — last 7 days first, then 14 ---
                 var ssQueries = [
                     'artificial+intelligence+pharmaceutical+drug+development+CMC',
                     'machine+learning+biologics+analytical+characterization'
@@ -3268,11 +3278,20 @@
 
                 for (var q = 0; q < ssQueries.length; q++) {
                     try {
+                        // Try last 7 days first
                         var ssRes = await fetch(
                             'https://api.semanticscholar.org/graph/v1/paper/search?query=' + ssQueries[q] +
                             '&limit=20&fields=title,url,publicationDate,venue,citationCount,influentialCitationCount' +
-                            '&publicationDateOrYear=' + ssDateFrom + ':' + ssDateTo
+                            '&publicationDateOrYear=' + ssFrom7 + ':' + ssTo
                         );
+                        if (!ssRes.ok) {
+                            // Fall back to 14 days
+                            ssRes = await fetch(
+                                'https://api.semanticscholar.org/graph/v1/paper/search?query=' + ssQueries[q] +
+                                '&limit=20&fields=title,url,publicationDate,venue,citationCount,influentialCitationCount' +
+                                '&publicationDateOrYear=' + ssFrom14 + ':' + ssTo
+                            );
+                        }
                         if (!ssRes.ok) continue;
                         var ssData = await ssRes.json();
                         if (ssData.data) {
@@ -3281,11 +3300,10 @@
                                     allItems.push({
                                         title: paper.title,
                                         link: paper.url,
-                                        pubDate: paper.publicationDate || new Date().toISOString(),
+                                        pubDate: paper.publicationDate || '',
                                         _type: 'paper',
                                         _source: paper.venue || '',
-                                        _citations: paper.citationCount || 0,
-                                        _influential: paper.influentialCitationCount || 0
+                                        _citations: paper.citationCount || 0
                                     });
                                 }
                             });
@@ -3306,17 +3324,13 @@
                     }
                 });
 
-                // Filter to last 7 days first; if too few, expand to 30 days
-                function filterByAge(items, maxAge) {
-                    return items.filter(function(item) {
-                        var pubTime = new Date(item.pubDate).getTime();
-                        return pubTime && (now - pubTime) <= maxAge;
-                    });
-                }
+                // === STRICT DATE FILTER ===
+                // Only keep items from the last 7 days
+                var recent = unique.filter(function(item) { return isRecent(item, SEVEN_DAYS); });
 
-                var recent = filterByAge(unique, SEVEN_DAYS);
-                if (recent.length < 6) {
-                    recent = filterByAge(unique, THIRTY_DAYS);
+                // If fewer than 4, expand to 14 days
+                if (recent.length < 4) {
+                    recent = unique.filter(function(item) { return isRecent(item, FOURTEEN_DAYS); });
                 }
 
                 // Separate by type
@@ -3328,17 +3342,18 @@
                     return new Date(b.pubDate) - new Date(a.pubDate);
                 });
 
-                // Sort papers: by citations first, then date for ties
+                // Sort papers by citations then date
                 paperItems.sort(function(a, b) {
                     var diff = (b._citations || 0) - (a._citations || 0);
                     return diff !== 0 ? diff : new Date(b.pubDate) - new Date(a.pubDate);
                 });
 
-                // Build final list: 6 news + 6 papers (fill from overflow)
+                // Build final list: up to 6 news + up to 6 papers
                 var finalList = [];
                 newsItems.slice(0, 6).forEach(function(i) { finalList.push(i); });
                 paperItems.slice(0, 6).forEach(function(i) { finalList.push(i); });
 
+                // Fill to 12 from overflow
                 var remaining = newsItems.slice(6).concat(paperItems.slice(6));
                 remaining.forEach(function(item) {
                     if (finalList.length >= 12) return;
@@ -3349,7 +3364,6 @@
                     var source = item._source || '';
                     var title = item.title || '';
 
-                    // Extract source from Google News title format: "Title - Source"
                     if (!source && item._type === 'news') {
                         var parts = title.split(' - ');
                         if (parts.length > 1) {
@@ -3375,7 +3389,6 @@
 
                 renderNewsFeed(result);
             } catch {
-                // Fallback
                 var content = document.getElementById('news-content');
                 var fallback = document.getElementById('news-fallback');
                 if (content) content.style.display = 'none';
