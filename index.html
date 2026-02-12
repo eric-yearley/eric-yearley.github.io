@@ -3225,20 +3225,29 @@
                 }
             } catch {}
 
-            // --- NEWS: Google News (ranked by Google's trending algorithm) ---
+            // Recency cutoffs
+            var SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+            var THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
+            var now = Date.now();
+
+            // Date range for Semantic Scholar (last 30 days to ensure enough results)
+            var ssDateFrom = new Date(now - THIRTY_DAYS).toISOString().slice(0, 10);
+            var ssDateTo = new Date().toISOString().slice(0, 10);
+
+            // --- NEWS: Google News — restrict to last 7 days with when:7d ---
             var newsFeeds = [
-                'https://news.google.com/rss/search?q=AI+biotech+pharmaceutical+drug+development&hl=en-US&gl=US&ceid=US:en',
-                'https://news.google.com/rss/search?q=artificial+intelligence+CMC+biologics+analytical&hl=en-US&gl=US&ceid=US:en',
-                'https://news.google.com/rss/search?q=CMC+biologics+regulatory+pharmaceutical&hl=en-US&gl=US&ceid=US:en'
+                'https://news.google.com/rss/search?q=AI+biotech+pharmaceutical+drug+development+when:7d&hl=en-US&gl=US&ceid=US:en',
+                'https://news.google.com/rss/search?q=artificial+intelligence+CMC+biologics+when:7d&hl=en-US&gl=US&ceid=US:en',
+                'https://news.google.com/rss/search?q=CMC+biologics+regulatory+pharmaceutical+when:7d&hl=en-US&gl=US&ceid=US:en'
             ];
 
             try {
                 var allItems = [];
 
-                // Fetch news via rss2json (Google already ranks by popularity/trending)
+                // Fetch news via rss2json
                 for (var i = 0; i < newsFeeds.length; i++) {
                     try {
-                        var apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(newsFeeds[i]) + '&count=8';
+                        var apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(newsFeeds[i]) + '&count=10';
                         var res = await fetch(apiUrl);
                         if (!res.ok) continue;
                         var data = await res.json();
@@ -3249,8 +3258,9 @@
                     } catch { continue; }
                 }
 
-                // --- PAPERS: Semantic Scholar — high-citation papers only ---
-                // Two focused queries with citation count sorting
+                // --- PAPERS: Semantic Scholar — recent + high-relevance ---
+                // Recent papers won't have many citations, so sort by relevance
+                // and use publicationDateOrYear for recency
                 var ssQueries = [
                     'artificial+intelligence+pharmaceutical+drug+development+CMC',
                     'machine+learning+biologics+analytical+characterization'
@@ -3261,14 +3271,13 @@
                         var ssRes = await fetch(
                             'https://api.semanticscholar.org/graph/v1/paper/search?query=' + ssQueries[q] +
                             '&limit=20&fields=title,url,publicationDate,venue,citationCount,influentialCitationCount' +
-                            '&year=2023-2026&sort=citationCount:desc'
+                            '&publicationDateOrYear=' + ssDateFrom + ':' + ssDateTo
                         );
                         if (!ssRes.ok) continue;
                         var ssData = await ssRes.json();
                         if (ssData.data) {
                             ssData.data.forEach(function(paper) {
-                                // Only include papers with real traction (5+ citations)
-                                if (paper.title && paper.url && (paper.citationCount || 0) >= 5) {
+                                if (paper.title && paper.url) {
                                     allItems.push({
                                         title: paper.title,
                                         link: paper.url,
@@ -3297,26 +3306,39 @@
                     }
                 });
 
-                // Separate by type
-                var newsItems = unique.filter(function(i) { return i._type === 'news'; });
-                var paperItems = unique.filter(function(i) { return i._type === 'paper'; });
+                // Filter to last 7 days first; if too few, expand to 30 days
+                function filterByAge(items, maxAge) {
+                    return items.filter(function(item) {
+                        var pubTime = new Date(item.pubDate).getTime();
+                        return pubTime && (now - pubTime) <= maxAge;
+                    });
+                }
 
-                // Sort news by date (newest first — Google already ranked by relevance)
+                var recent = filterByAge(unique, SEVEN_DAYS);
+                if (recent.length < 6) {
+                    recent = filterByAge(unique, THIRTY_DAYS);
+                }
+
+                // Separate by type
+                var newsItems = recent.filter(function(i) { return i._type === 'news'; });
+                var paperItems = recent.filter(function(i) { return i._type === 'paper'; });
+
+                // Sort news by date (newest first)
                 newsItems.sort(function(a, b) {
                     return new Date(b.pubDate) - new Date(a.pubDate);
                 });
 
-                // Sort papers by citation count (most cited first = most discussed)
+                // Sort papers: by citations first, then date for ties
                 paperItems.sort(function(a, b) {
-                    return (b._citations || 0) - (a._citations || 0);
+                    var diff = (b._citations || 0) - (a._citations || 0);
+                    return diff !== 0 ? diff : new Date(b.pubDate) - new Date(a.pubDate);
                 });
 
-                // Build final list: 6 news + 6 papers (or fill from whatever's available)
+                // Build final list: 6 news + 6 papers (fill from overflow)
                 var finalList = [];
                 newsItems.slice(0, 6).forEach(function(i) { finalList.push(i); });
                 paperItems.slice(0, 6).forEach(function(i) { finalList.push(i); });
 
-                // Fill to 12 if one category had less
                 var remaining = newsItems.slice(6).concat(paperItems.slice(6));
                 remaining.forEach(function(item) {
                     if (finalList.length >= 12) return;
