@@ -5,6 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eric J. Yearley, PhD | Analytical Development Leader</title>
     <meta name="description" content="Distinguished analytical development leader with 13+ years experience in biologics, vaccines, and gene therapy. Expert in mRNA-LNP, AAV, and monoclonal antibody characterization.">
+    <meta name="author" content="Eric J. Yearley, PhD">
+    <link rel="canonical" href="https://ericyearley.com/">
+    <meta name="theme-color" content="#0a0b0d">
+
+    <!-- Favicon (inline SVG flask) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1F9EA;</text></svg>">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ericyearley.com/">
+    <meta property="og:title" content="Eric J. Yearley, PhD | Analytical Development Leader">
+    <meta property="og:description" content="Distinguished analytical development leader with 13+ years experience in biologics, vaccines, and gene therapy. Expert in mRNA-LNP, AAV, and monoclonal antibody characterization.">
+    <meta property="og:image" content="https://ericyearley.com/website.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Eric J. Yearley, PhD | Analytical Development Leader">
+    <meta name="twitter:description" content="Distinguished analytical development leader with 13+ years experience in biologics, vaccines, and gene therapy.">
+    <meta name="twitter:image" content="https://ericyearley.com/website.png">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Eric J. Yearley",
+        "honorificSuffix": "PhD",
+        "url": "https://ericyearley.com",
+        "jobTitle": "Associate Director: Cell, Molecular, Separations & CMC Analytical",
+        "worksFor": {
+            "@type": "Organization",
+            "name": "CSL Seqirus"
+        },
+        "alumniOf": [
+            {
+                "@type": "CollegeOrUniversity",
+                "name": "University of Toledo"
+            },
+            {
+                "@type": "Organization",
+                "name": "Genentech"
+            }
+        ],
+        "knowsAbout": [
+            "Analytical Development",
+            "Biologics Characterization",
+            "Mass Spectrometry",
+            "mRNA-LNP",
+            "AAV Gene Therapy",
+            "Monoclonal Antibodies",
+            "Vaccine Development"
+        ],
+        "sameAs": [
+            "https://www.linkedin.com/in/eric-yearley-541a4043/",
+            "https://github.com/eric-yearley"
+        ]
+    }
+    </script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -1531,6 +1591,380 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* GitHub Activity Section */
+        .github-section {
+            background: var(--bg-primary);
+        }
+
+        .github-stats-row {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .github-stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 1.5rem 2rem;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .github-stat:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-4px);
+        }
+
+        .github-stat-value {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .github-stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+        }
+
+        .repo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .repo-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 2rem;
+            position: relative;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .repo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-gold));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .repo-card:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-6px);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .repo-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .repo-card h4 {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--accent-primary);
+            margin-bottom: 0.75rem;
+            word-break: break-word;
+        }
+
+        .repo-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            flex: 1;
+            margin-bottom: 1rem;
+        }
+
+        .repo-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .repo-lang {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .repo-lang-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .repo-stars {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .github-cta {
+            text-align: center;
+        }
+
+        .github-fallback {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .github-fallback a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+
+        .github-fallback a:hover {
+            text-decoration: underline;
+        }
+
+        /* Insights Section */
+        .insights-section {
+            background: var(--bg-secondary);
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .insight-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-gold));
+        }
+
+        .insight-card:nth-child(2)::before {
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-violet));
+        }
+
+        .insight-card:nth-child(3)::before {
+            background: linear-gradient(90deg, var(--accent-violet), var(--accent-primary));
+        }
+
+        .insight-card:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-6px);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .insight-tags {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .insight-tag {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.3rem 0.7rem;
+            border-radius: 3px;
+        }
+
+        .insight-tag.date {
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .insight-tag.category {
+            color: var(--accent-primary);
+            background: rgba(0,212,255,0.08);
+            border: 1px solid rgba(0,212,255,0.2);
+        }
+
+        .insight-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .insight-card .insight-excerpt {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .insight-link {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-primary);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .insight-link:hover {
+            gap: 0.75rem;
+        }
+
+        /* Newsletter Signup */
+        .newsletter-banner {
+            margin-top: 4rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .newsletter-text {
+            flex: 1;
+        }
+
+        .newsletter-text h4 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletter-text p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.75rem;
+            flex: 1;
+            max-width: 450px;
+        }
+
+        .newsletter-form input[type="email"] {
+            flex: 1;
+            padding: 0.85rem 1.25rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .newsletter-form input[type="email"]::placeholder {
+            color: var(--text-muted);
+        }
+
+        .newsletter-form input[type="email"]:focus {
+            border-color: var(--accent-primary);
+        }
+
+        .newsletter-form button {
+            padding: 0.85rem 1.5rem;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            box-shadow: var(--glow-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive additions */
+        @media (max-width: 900px) {
+            .repo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .newsletter-form {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .github-stats-row {
+                flex-wrap: wrap;
+            }
+
+            .github-stat {
+                min-width: 140px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .github-stats-row {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1806,6 +2240,8 @@
                 <li><a href="#case-studies">Case Studies</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#publications">Publications</a></li>
+                <li><a href="#github">GitHub</a></li>
+                <li><a href="#insights">Insights</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <a href="Resume_Eric J Yearley.pdf" class="nav-resume" download>
@@ -1848,6 +2284,23 @@
             <div class="hero-photo">
                 <div class="hero-photo-container">
                     <img src="profile.png" alt="Eric J. Yearley, PhD">
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="stat-years">13<span class="plus">+</span></div>
+                    <div class="stat-label">Years of Experience</div>
+                    <p class="stat-description">Leading analytical development for cutting-edge biologic modalities</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="stat-citations">560<span class="plus">+</span></div>
+                    <div class="stat-label">Total Citations</div>
+                    <p class="stat-description">Peer-reviewed publications in leading scientific journals</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="stat-programs">7<span class="plus">+</span></div>
+                    <div class="stat-label">Programs</div>
+                    <p class="stat-description">Majority contributor or leader of analytical control strategies for clinical and platform programs</p>
                 </div>
             </div>
         </div>
@@ -2319,11 +2772,92 @@
         </div>
     </section>
 
+    <!-- GitHub Activity -->
+    <section id="github" class="github-section">
+        <div class="section-container">
+            <header class="section-header">
+                <p class="section-label">07 — Open Source</p>
+                <h2 class="section-title">GitHub Activity</h2>
+                <p class="section-subtitle">Open source projects and contributions</p>
+            </header>
+            <div id="github-content">
+                <div class="github-stats-row reveal">
+                    <div class="github-stat">
+                        <div class="github-stat-value" id="gh-repos">—</div>
+                        <div class="github-stat-label">Public Repos</div>
+                    </div>
+                    <div class="github-stat">
+                        <div class="github-stat-value" id="gh-stars">—</div>
+                        <div class="github-stat-label">Total Stars</div>
+                    </div>
+                    <div class="github-stat">
+                        <div class="github-stat-value" id="gh-followers">—</div>
+                        <div class="github-stat-label">Followers</div>
+                    </div>
+                </div>
+                <div class="repo-grid" id="repo-grid">
+                    <!-- Populated by JS -->
+                </div>
+                <div class="github-cta">
+                    <a href="https://github.com/eric-yearley" class="btn btn-secondary" target="_blank" rel="noopener">
+                        View All on GitHub
+                        <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div id="github-fallback" class="github-fallback" style="display:none;">
+                <p>Visit my profile on <a href="https://github.com/eric-yearley" target="_blank" rel="noopener">GitHub</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Insights -->
+    <section id="insights" class="insights-section">
+        <div class="section-container">
+            <header class="section-header">
+                <p class="section-label">08 — Insights</p>
+                <h2 class="section-title">Insights</h2>
+                <p class="section-subtitle">Perspectives on analytical development, mRNA therapeutics, and AI in biotech</p>
+            </header>
+            <div class="insights-grid">
+                <article class="insight-card reveal">
+                    <div class="insight-tags">
+                        <span class="insight-tag date">Coming Soon</span>
+                        <span class="insight-tag category">mRNA/LNP</span>
+                    </div>
+                    <h4>Analytical Strategies for mRNA-LNP Characterization: From Bench to IND</h4>
+                    <p class="insight-excerpt">A deep dive into the critical quality attributes, analytical methods, and regulatory expectations for characterizing mRNA-lipid nanoparticle therapeutics throughout development.</p>
+                    <span class="insight-link">Read more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </article>
+                <article class="insight-card reveal">
+                    <div class="insight-tags">
+                        <span class="insight-tag date">Coming Soon</span>
+                        <span class="insight-tag category">AI in Biotech</span>
+                    </div>
+                    <h4>AI-Powered CMC: How Machine Learning Is Reshaping Analytical Development</h4>
+                    <p class="insight-excerpt">Exploring practical applications of AI and large language models in CMC workflows — from automated documentation and deviation analysis to predictive method development.</p>
+                    <span class="insight-link">Read more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </article>
+                <article class="insight-card reveal">
+                    <div class="insight-tags">
+                        <span class="insight-tag date">Coming Soon</span>
+                        <span class="insight-tag category">mRNA Therapeutics</span>
+                    </div>
+                    <h4>Beyond Vaccines: The Next Wave of mRNA/LNP Therapeutics and What It Means for Analytical Scientists</h4>
+                    <p class="insight-excerpt">mRNA technology is expanding from vaccines into rare disease, oncology, and protein replacement therapies. What new analytical challenges and opportunities does this create?</p>
+                    <span class="insight-link">Read more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact -->
     <section id="contact">
         <div class="section-container">
             <header class="section-header">
-                <p class="section-label">06 — Contact</p>
+                <p class="section-label">09 — Contact</p>
                 <h2 class="section-title">Let's Connect</h2>
             </header>
             <div class="contact-layout">
@@ -2381,6 +2915,16 @@
                         <span>GitHub</span>
                     </a>
                 </div>
+                <div class="newsletter-banner reveal">
+                    <div class="newsletter-text">
+                        <h4>Stay Updated</h4>
+                        <p>Get insights on analytical development, mRNA/LNP science, and AI in biotech.</p>
+                    </div>
+                    <form class="newsletter-form" action="https://buttondown.com/api/emails/embed-subscribe/ericyearley" method="post" target="_blank">
+                        <input type="email" name="email" placeholder="Your email address" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
@@ -2396,9 +2940,11 @@
                 <a href="#about">About</a>
                 <a href="#expertise">Expertise</a>
                 <a href="#experience">Experience</a>
+                <a href="#github">GitHub</a>
+                <a href="#insights">Insights</a>
                 <a href="#contact">Contact</a>
             </nav>
-            <p class="footer-copyright">© 2025 Eric J. Yearley. All rights reserved.</p>
+            <p class="footer-copyright">© <span id="copyright-year">2025</span> Eric J. Yearley. All rights reserved.</p>
         </div>
     </footer>
 
@@ -2475,6 +3021,240 @@
             btn.parentNode.replaceChild(container, btn);
         }
         window.revealEmail = revealEmail;
+
+        // Dynamic copyright year
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
+        // Dynamic years of experience (start date: Jan 2012)
+        (function updateYearsOfExperience() {
+            const startYear = 2012;
+            const years = new Date().getFullYear() - startYear;
+            const el = document.getElementById('stat-years');
+            if (el) el.innerHTML = years + '<span class="plus">+</span>';
+        })();
+
+        // ---- localStorage cache helpers ----
+        const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
+
+        function cacheGet(key) {
+            try {
+                const raw = localStorage.getItem(key);
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                if (Date.now() - parsed.timestamp > CACHE_TTL) {
+                    localStorage.removeItem(key);
+                    return null;
+                }
+                return parsed.data;
+            } catch { return null; }
+        }
+
+        function cacheSet(key, data) {
+            try {
+                localStorage.setItem(key, JSON.stringify({ data, timestamp: Date.now() }));
+            } catch { /* quota exceeded — ignore */ }
+        }
+
+        // ---- Semantic Scholar Integration ----
+        (async function fetchSemanticScholar() {
+            const CACHE_KEY = 'ss_citations';
+            const cached = cacheGet(CACHE_KEY);
+            if (cached) {
+                applySemanticScholarData(cached);
+                return;
+            }
+
+            try {
+                // Search for author by name
+                const searchRes = await fetch('https://api.semanticscholar.org/graph/v1/author/search?query=Eric+Yearley&limit=5');
+                if (!searchRes.ok) return;
+                const searchData = await searchRes.json();
+
+                // Find the right author (look for one with relevant papers)
+                let authorId = null;
+                if (searchData.data && searchData.data.length > 0) {
+                    authorId = searchData.data[0].authorId;
+                }
+                if (!authorId) return;
+
+                // Fetch author details with papers
+                const authorRes = await fetch(
+                    'https://api.semanticscholar.org/graph/v1/author/' + authorId + '?fields=citationCount,paperCount,papers.title,papers.citationCount,papers.year'
+                );
+                if (!authorRes.ok) return;
+                const authorData = await authorRes.json();
+
+                const result = {
+                    totalCitations: authorData.citationCount || 0,
+                    papers: (authorData.papers || []).map(function(p) {
+                        return { title: p.title, citations: p.citationCount, year: p.year };
+                    })
+                };
+
+                cacheSet(CACHE_KEY, result);
+                applySemanticScholarData(result);
+            } catch {
+                // API failed — fallback values remain
+            }
+        })();
+
+        function applySemanticScholarData(data) {
+            // Update hero stat
+            if (data.totalCitations > 0) {
+                var el = document.getElementById('stat-citations');
+                if (el) el.innerHTML = data.totalCitations + '<span class="plus">+</span>';
+            }
+
+            // Match papers to publication cards by title similarity
+            if (data.papers && data.papers.length > 0) {
+                var citationElements = document.querySelectorAll('.citation-count');
+                citationElements.forEach(function(badge) {
+                    var pubTitle = '';
+                    var card = badge.closest('.publication-content');
+                    if (card) {
+                        var h4 = card.querySelector('h4');
+                        if (h4) pubTitle = h4.textContent.toLowerCase().trim();
+                    }
+                    if (!pubTitle) return;
+
+                    // Find best match
+                    var bestMatch = null;
+                    var bestScore = 0;
+                    data.papers.forEach(function(paper) {
+                        if (!paper.title) return;
+                        var score = titleSimilarity(pubTitle, paper.title.toLowerCase().trim());
+                        if (score > bestScore && score > 0.4) {
+                            bestScore = score;
+                            bestMatch = paper;
+                        }
+                    });
+
+                    if (bestMatch && bestMatch.citations != null) {
+                        badge.textContent = bestMatch.citations + ' citations';
+                    }
+                });
+            }
+        }
+
+        function titleSimilarity(a, b) {
+            // Simple word overlap ratio
+            var wordsA = a.split(/\s+/).filter(function(w) { return w.length > 3; });
+            var wordsB = b.split(/\s+/).filter(function(w) { return w.length > 3; });
+            if (wordsA.length === 0 || wordsB.length === 0) return 0;
+            var matches = 0;
+            wordsA.forEach(function(w) {
+                if (wordsB.indexOf(w) !== -1) matches++;
+            });
+            return matches / Math.max(wordsA.length, wordsB.length);
+        }
+
+        // ---- GitHub API Integration ----
+        (async function fetchGitHub() {
+            var CACHE_KEY_USER = 'gh_user';
+            var CACHE_KEY_REPOS = 'gh_repos';
+            var cachedUser = cacheGet(CACHE_KEY_USER);
+            var cachedRepos = cacheGet(CACHE_KEY_REPOS);
+
+            if (cachedUser && cachedRepos) {
+                renderGitHub(cachedUser, cachedRepos);
+                return;
+            }
+
+            try {
+                var [userRes, reposRes] = await Promise.all([
+                    fetch('https://api.github.com/users/eric-yearley'),
+                    fetch('https://api.github.com/users/eric-yearley/repos?sort=updated&per_page=6')
+                ]);
+
+                if (!userRes.ok || !reposRes.ok) throw new Error('API error');
+
+                var userData = await userRes.json();
+                var reposData = await reposRes.json();
+
+                var user = {
+                    repos: userData.public_repos || 0,
+                    followers: userData.followers || 0
+                };
+
+                var repos = reposData.map(function(r) {
+                    return {
+                        name: r.name,
+                        description: r.description || 'No description',
+                        language: r.language,
+                        stars: r.stargazers_count || 0,
+                        updated: r.updated_at,
+                        url: r.html_url
+                    };
+                });
+
+                cacheSet(CACHE_KEY_USER, user);
+                cacheSet(CACHE_KEY_REPOS, repos);
+                renderGitHub(user, repos);
+            } catch {
+                // Show fallback
+                var content = document.getElementById('github-content');
+                var fallback = document.getElementById('github-fallback');
+                if (content) content.style.display = 'none';
+                if (fallback) fallback.style.display = 'block';
+            }
+        })();
+
+        function renderGitHub(user, repos) {
+            // Stats
+            var totalStars = repos.reduce(function(sum, r) { return sum + r.stars; }, 0);
+            var reposEl = document.getElementById('gh-repos');
+            var starsEl = document.getElementById('gh-stars');
+            var followersEl = document.getElementById('gh-followers');
+            if (reposEl) reposEl.textContent = user.repos;
+            if (starsEl) starsEl.textContent = totalStars;
+            if (followersEl) followersEl.textContent = user.followers;
+
+            // Repo cards
+            var grid = document.getElementById('repo-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            var langColors = {
+                'JavaScript': '#f1e05a',
+                'Python': '#3572A5',
+                'HTML': '#e34c26',
+                'CSS': '#563d7c',
+                'TypeScript': '#3178c6',
+                'Jupyter Notebook': '#DA5B0B',
+                'Shell': '#89e051',
+                'Go': '#00ADD8',
+                'Rust': '#dea584',
+                'Ruby': '#701516'
+            };
+
+            repos.forEach(function(repo) {
+                var card = document.createElement('a');
+                card.href = repo.url;
+                card.target = '_blank';
+                card.rel = 'noopener';
+                card.className = 'repo-card reveal';
+
+                var langDot = repo.language
+                    ? '<span class="repo-lang"><span class="repo-lang-dot" style="background:' + (langColors[repo.language] || '#8b929d') + '"></span>' + repo.language + '</span>'
+                    : '';
+
+                var updatedDate = new Date(repo.updated).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+
+                card.innerHTML =
+                    '<h4>' + repo.name + '</h4>' +
+                    '<p>' + repo.description + '</p>' +
+                    '<div class="repo-meta">' +
+                        langDot +
+                        '<span class="repo-stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> ' + repo.stars + '</span>' +
+                        '<span>Updated ' + updatedDate + '</span>' +
+                    '</div>';
+
+                grid.appendChild(card);
+            });
+
+            // Observe new reveal elements
+            grid.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+        }
 
     </script>
 </body>
