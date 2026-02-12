@@ -3240,10 +3240,13 @@
             var ssTo = new Date().toISOString().slice(0, 10);
 
             // Helper: is this item from within the last N ms?
+            // If date can't be parsed, assume it's recent (don't drop content)
             function isRecent(item, maxAge) {
+                if (!item.pubDate) return true;
                 var pubTime = new Date(item.pubDate).getTime();
-                // Reject items with no valid date
-                if (!pubTime || isNaN(pubTime)) return false;
+                if (!pubTime || isNaN(pubTime)) return true;
+                // Also allow future dates (clock skew)
+                if (pubTime > now) return true;
                 return (now - pubTime) <= maxAge;
             }
 
@@ -3324,13 +3327,23 @@
                     }
                 });
 
-                // === STRICT DATE FILTER ===
-                // Only keep items from the last 7 days
+                // === DATE FILTER ===
+                // Sort everything by date first (newest first)
+                unique.sort(function(a, b) {
+                    return new Date(b.pubDate || 0) - new Date(a.pubDate || 0);
+                });
+
+                // Try last 7 days
                 var recent = unique.filter(function(item) { return isRecent(item, SEVEN_DAYS); });
 
                 // If fewer than 4, expand to 14 days
                 if (recent.length < 4) {
                     recent = unique.filter(function(item) { return isRecent(item, FOURTEEN_DAYS); });
+                }
+
+                // Safety net: if filters left us with nothing, take the newest 12
+                if (recent.length === 0) {
+                    recent = unique.slice(0, 12);
                 }
 
                 // Separate by type
