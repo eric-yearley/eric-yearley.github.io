@@ -3210,13 +3210,14 @@
 
         // ---- AI in Biotech News Feed ----
         (async function fetchNewsFeed() {
-            // v3 cache key — invalidates stale cached error data
-            var CACHE_KEY = 'news_ai_biotech_v3';
+            // v4 cache key — fuzzy dedup update
+            var CACHE_KEY = 'news_ai_biotech_v4';
             var NEWS_CACHE_TTL = 12 * 60 * 60 * 1000; // 12 hours
 
             // Clear old cache keys
             try { localStorage.removeItem('news_ai_biotech'); } catch {}
             try { localStorage.removeItem('news_ai_biotech_v2'); } catch {}
+            try { localStorage.removeItem('news_ai_biotech_v3'); } catch {}
 
             // Check cache
             try {
@@ -3317,15 +3318,25 @@
 
                 if (allItems.length === 0) throw new Error('No items');
 
-                // Deduplicate by normalized title
-                var seen = {};
+                // Deduplicate: exact match + fuzzy similarity
+                function extractWords(str) {
+                    return str.toLowerCase().replace(/[^a-z0-9 ]/g, '').split(/\s+/).filter(function(w) { return w.length > 2; });
+                }
+                function similarity(a, b) {
+                    var wordsA = extractWords(a);
+                    var wordsB = extractWords(b);
+                    if (wordsA.length === 0 || wordsB.length === 0) return 0;
+                    var setB = {};
+                    wordsB.forEach(function(w) { setB[w] = true; });
+                    var shared = wordsA.filter(function(w) { return setB[w]; }).length;
+                    return shared / Math.max(wordsA.length, wordsB.length);
+                }
                 var unique = [];
                 allItems.forEach(function(item) {
-                    var key = item.title.toLowerCase().trim().replace(/[^a-z0-9]/g, '').slice(0, 60);
-                    if (!seen[key]) {
-                        seen[key] = true;
-                        unique.push(item);
-                    }
+                    var dominated = unique.some(function(existing) {
+                        return similarity(item.title, existing.title) > 0.5;
+                    });
+                    if (!dominated) unique.push(item);
                 });
 
                 // === DATE FILTER ===
