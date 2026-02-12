@@ -1752,27 +1752,31 @@
             text-decoration: underline;
         }
 
-        /* Insights Section */
-        .insights-section {
+        /* News Feed Section */
+        .news-section {
             background: var(--bg-secondary);
         }
 
-        .insights-grid {
+        .news-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
         }
 
-        .insight-card {
+        .news-card {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            padding: 2.5rem;
+            padding: 2rem;
             position: relative;
             transition: all 0.4s ease;
             overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
         }
 
-        .insight-card::before {
+        .news-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -1780,151 +1784,105 @@
             right: 0;
             height: 3px;
             background: linear-gradient(90deg, var(--accent-primary), var(--accent-gold));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
         }
 
-        .insight-card:nth-child(2)::before {
-            background: linear-gradient(90deg, var(--accent-gold), var(--accent-violet));
-        }
-
-        .insight-card:nth-child(3)::before {
-            background: linear-gradient(90deg, var(--accent-violet), var(--accent-primary));
-        }
-
-        .insight-card:hover {
+        .news-card:hover {
             border-color: var(--border-accent);
             transform: translateY(-6px);
             box-shadow: var(--glow-cyan);
         }
 
-        .insight-tags {
-            display: flex;
-            gap: 0.75rem;
-            margin-bottom: 1.25rem;
+        .news-card:hover::before {
+            transform: scaleX(1);
         }
 
-        .insight-tag {
+        .news-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .news-source {
             font-family: var(--font-mono);
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            padding: 0.3rem 0.7rem;
-            border-radius: 3px;
-        }
-
-        .insight-tag.date {
-            color: var(--text-muted);
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border-subtle);
-        }
-
-        .insight-tag.category {
             color: var(--accent-primary);
             background: rgba(0,212,255,0.08);
             border: 1px solid rgba(0,212,255,0.2);
+            padding: 0.25rem 0.6rem;
+            border-radius: 3px;
         }
 
-        .insight-card h4 {
-            font-family: var(--font-display);
-            font-size: 1.3rem;
-            line-height: 1.4;
-            margin-bottom: 1rem;
-        }
-
-        .insight-card .insight-excerpt {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-
-        .insight-link {
+        .news-date {
             font-family: var(--font-mono);
-            font-size: 0.75rem;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .news-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            line-height: 1.4;
+            margin-bottom: 0.75rem;
+            flex: 1;
+        }
+
+        .news-read-more {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
             color: var(--accent-primary);
-            text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            margin-top: auto;
             transition: gap 0.3s ease;
         }
 
-        .insight-link:hover {
+        .news-card:hover .news-read-more {
             gap: 0.75rem;
         }
 
-        /* Newsletter Signup */
-        .newsletter-banner {
-            margin-top: 4rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            padding: 3rem;
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-        }
-
-        .newsletter-text {
-            flex: 1;
-        }
-
-        .newsletter-text h4 {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .newsletter-text p {
-            font-size: 0.95rem;
+        .news-loading {
+            text-align: center;
+            padding: 4rem 2rem;
             color: var(--text-muted);
-        }
-
-        .newsletter-form {
-            display: flex;
-            gap: 0.75rem;
-            flex: 1;
-            max-width: 450px;
-        }
-
-        .newsletter-form input[type="email"] {
-            flex: 1;
-            padding: 0.85rem 1.25rem;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-subtle);
-            color: var(--text-primary);
-            font-family: var(--font-body);
-            font-size: 0.9rem;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .newsletter-form input[type="email"]::placeholder {
-            color: var(--text-muted);
-        }
-
-        .newsletter-form input[type="email"]:focus {
-            border-color: var(--accent-primary);
-        }
-
-        .newsletter-form button {
-            padding: 0.85rem 1.5rem;
-            background: var(--accent-primary);
-            color: var(--bg-primary);
-            border: none;
             font-family: var(--font-mono);
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.3s ease;
+            font-size: 0.85rem;
         }
 
-        .newsletter-form button:hover {
-            box-shadow: var(--glow-cyan);
-            transform: translateY(-2px);
+        .news-loading .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-subtle);
+            border-top-color: var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        .news-fallback {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .news-fallback a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+
+        .news-fallback a:hover {
+            text-decoration: underline;
         }
 
         /* Responsive additions */
@@ -1933,18 +1891,8 @@
                 grid-template-columns: 1fr;
             }
 
-            .insights-grid {
+            .news-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .newsletter-banner {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .newsletter-form {
-                max-width: 100%;
-                width: 100%;
             }
 
             .github-stats-row {
@@ -1957,10 +1905,6 @@
         }
 
         @media (max-width: 768px) {
-            .newsletter-form {
-                flex-direction: column;
-            }
-
             .github-stats-row {
                 flex-direction: column;
             }
@@ -2813,42 +2757,22 @@
         </div>
     </section>
 
-    <!-- Insights -->
-    <section id="insights" class="insights-section">
+    <!-- AI in Biotech News Feed -->
+    <section id="insights" class="news-section">
         <div class="section-container">
             <header class="section-header">
                 <p class="section-label">08 — Insights</p>
-                <h2 class="section-title">Insights</h2>
-                <p class="section-subtitle">Perspectives on analytical development, mRNA therapeutics, and AI in biotech</p>
+                <h2 class="section-title">AI in Biotech</h2>
+                <p class="section-subtitle">Latest news on artificial intelligence in pharmaceutical development, CMC, and the life sciences</p>
             </header>
-            <div class="insights-grid">
-                <article class="insight-card reveal">
-                    <div class="insight-tags">
-                        <span class="insight-tag date">Coming Soon</span>
-                        <span class="insight-tag category">mRNA/LNP</span>
-                    </div>
-                    <h4>Analytical Strategies for mRNA-LNP Characterization: From Bench to IND</h4>
-                    <p class="insight-excerpt">A deep dive into the critical quality attributes, analytical methods, and regulatory expectations for characterizing mRNA-lipid nanoparticle therapeutics throughout development.</p>
-                    <span class="insight-link">Read more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-                </article>
-                <article class="insight-card reveal">
-                    <div class="insight-tags">
-                        <span class="insight-tag date">Coming Soon</span>
-                        <span class="insight-tag category">AI in Biotech</span>
-                    </div>
-                    <h4>AI-Powered CMC: How Machine Learning Is Reshaping Analytical Development</h4>
-                    <p class="insight-excerpt">Exploring practical applications of AI and large language models in CMC workflows — from automated documentation and deviation analysis to predictive method development.</p>
-                    <span class="insight-link">Read more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-                </article>
-                <article class="insight-card reveal">
-                    <div class="insight-tags">
-                        <span class="insight-tag date">Coming Soon</span>
-                        <span class="insight-tag category">mRNA Therapeutics</span>
-                    </div>
-                    <h4>Beyond Vaccines: The Next Wave of mRNA/LNP Therapeutics and What It Means for Analytical Scientists</h4>
-                    <p class="insight-excerpt">mRNA technology is expanding from vaccines into rare disease, oncology, and protein replacement therapies. What new analytical challenges and opportunities does this create?</p>
-                    <span class="insight-link">Read more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-                </article>
+            <div id="news-content">
+                <div class="news-loading">
+                    <div class="spinner"></div>
+                    <p>Loading latest headlines...</p>
+                </div>
+            </div>
+            <div id="news-fallback" class="news-fallback" style="display:none;">
+                <p>Search <a href="https://news.google.com/search?q=AI%20biotech%20pharmaceutical%20CMC" target="_blank" rel="noopener">Google News</a> for the latest on AI in biotech.</p>
             </div>
         </div>
     </section>
@@ -2914,16 +2838,6 @@
                         </svg>
                         <span>GitHub</span>
                     </a>
-                </div>
-                <div class="newsletter-banner reveal">
-                    <div class="newsletter-text">
-                        <h4>Stay Updated</h4>
-                        <p>Get insights on analytical development, mRNA/LNP science, and AI in biotech.</p>
-                    </div>
-                    <form class="newsletter-form" action="https://buttondown.com/api/emails/embed-subscribe/ericyearley" method="post" target="_blank">
-                        <input type="email" name="email" placeholder="Your email address" required>
-                        <button type="submit">Subscribe</button>
-                    </form>
                 </div>
             </div>
         </div>
@@ -3254,6 +3168,132 @@
 
             // Observe new reveal elements
             grid.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+        }
+
+        // ---- AI in Biotech News Feed ----
+        (async function fetchNewsFeed() {
+            var CACHE_KEY = 'news_ai_biotech';
+            var NEWS_CACHE_TTL = 6 * 60 * 60 * 1000; // 6 hours for news
+
+            // Check cache with shorter TTL
+            try {
+                var raw = localStorage.getItem(CACHE_KEY);
+                if (raw) {
+                    var parsed = JSON.parse(raw);
+                    if (Date.now() - parsed.timestamp < NEWS_CACHE_TTL) {
+                        renderNewsFeed(parsed.data);
+                        return;
+                    }
+                }
+            } catch {}
+
+            // RSS feeds to aggregate — Google News searches for AI in biotech/pharma/CMC
+            var queries = [
+                'AI+biotech+pharmaceutical+drug+development',
+                'artificial+intelligence+CMC+biologics+analytical'
+            ];
+
+            try {
+                var allItems = [];
+
+                for (var i = 0; i < queries.length; i++) {
+                    var rssUrl = 'https://news.google.com/rss/search?q=' + queries[i] + '&hl=en-US&gl=US&ceid=US:en';
+                    var apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(rssUrl) + '&count=10';
+
+                    var res = await fetch(apiUrl);
+                    if (!res.ok) continue;
+                    var data = await res.json();
+                    if (data.status === 'ok' && data.items) {
+                        allItems = allItems.concat(data.items);
+                    }
+                }
+
+                if (allItems.length === 0) throw new Error('No items');
+
+                // Deduplicate by title
+                var seen = {};
+                var unique = [];
+                allItems.forEach(function(item) {
+                    var key = item.title.toLowerCase().trim();
+                    if (!seen[key]) {
+                        seen[key] = true;
+                        unique.push(item);
+                    }
+                });
+
+                // Sort by date (newest first)
+                unique.sort(function(a, b) {
+                    return new Date(b.pubDate) - new Date(a.pubDate);
+                });
+
+                // Take top 9
+                var news = unique.slice(0, 9).map(function(item) {
+                    // Extract source from title (Google News format: "Title - Source")
+                    var parts = item.title.split(' - ');
+                    var source = parts.length > 1 ? parts.pop().trim() : '';
+                    var title = parts.join(' - ').trim();
+
+                    return {
+                        title: title,
+                        source: source,
+                        date: item.pubDate,
+                        link: item.link
+                    };
+                });
+
+                // Cache
+                try {
+                    localStorage.setItem(CACHE_KEY, JSON.stringify({ data: news, timestamp: Date.now() }));
+                } catch {}
+
+                renderNewsFeed(news);
+            } catch {
+                // Fallback
+                var content = document.getElementById('news-content');
+                var fallback = document.getElementById('news-fallback');
+                if (content) content.style.display = 'none';
+                if (fallback) fallback.style.display = 'block';
+            }
+        })();
+
+        function renderNewsFeed(news) {
+            var container = document.getElementById('news-content');
+            if (!container) return;
+
+            var html = '<div class="news-grid">';
+
+            news.forEach(function(item) {
+                var dateStr = new Date(item.date).toLocaleDateString('en-US', {
+                    month: 'short', day: 'numeric', year: 'numeric'
+                });
+
+                // Escape HTML in title to prevent injection
+                var safeTitle = item.title
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;');
+
+                var safeSource = item.source
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+
+                html += '<a href="' + item.link + '" class="news-card reveal" target="_blank" rel="noopener">' +
+                    '<div class="news-meta">' +
+                        (safeSource ? '<span class="news-source">' + safeSource + '</span>' : '') +
+                        '<span class="news-date">' + dateStr + '</span>' +
+                    '</div>' +
+                    '<h4>' + safeTitle + '</h4>' +
+                    '<span class="news-read-more">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>' +
+                '</a>';
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+
+            // Observe new reveal elements
+            container.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
         }
 
     </script>
