@@ -3210,13 +3210,13 @@
 
         // ---- AI in Biotech News Feed ----
         (async function fetchNewsFeed() {
-            // v6 cache key — refined dedup (stops false positives on papers)
-            var CACHE_KEY = 'news_ai_biotech_v6';
+            // v7 cache key — guarantee papers in feed
+            var CACHE_KEY = 'news_ai_biotech_v7';
             var NEWS_CACHE_TTL = 12 * 60 * 60 * 1000; // 12 hours
 
             // Clear old cache keys
             try {
-                for (var v = 1; v <= 5; v++) {
+                for (var v = 1; v <= 6; v++) {
                     localStorage.removeItem(v === 1 ? 'news_ai_biotech' : 'news_ai_biotech_v' + v);
                 }
             } catch {}
@@ -3283,22 +3283,15 @@
                     'machine+learning+biologics+analytical+characterization'
                 ];
 
+                // 30-day window for API query (client-side filter handles recency)
+                var ssFrom30 = new Date(now - 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
                 for (var q = 0; q < ssQueries.length; q++) {
                     try {
-                        // Try last 7 days first
                         var ssRes = await fetch(
                             'https://api.semanticscholar.org/graph/v1/paper/search?query=' + ssQueries[q] +
                             '&limit=20&fields=title,url,publicationDate,venue,citationCount,influentialCitationCount' +
-                            '&publicationDateOrYear=' + ssFrom7 + ':' + ssTo
+                            '&publicationDateOrYear=' + ssFrom30 + ':' + ssTo
                         );
-                        if (!ssRes.ok) {
-                            // Fall back to 14 days
-                            ssRes = await fetch(
-                                'https://api.semanticscholar.org/graph/v1/paper/search?query=' + ssQueries[q] +
-                                '&limit=20&fields=title,url,publicationDate,venue,citationCount,influentialCitationCount' +
-                                '&publicationDateOrYear=' + ssFrom14 + ':' + ssTo
-                            );
-                        }
                         if (!ssRes.ok) continue;
                         var ssData = await ssRes.json();
                         if (ssData.data) {
@@ -3380,6 +3373,16 @@
                     newsItems = allNews.slice(0, 6);
                 }
 
+                // Guarantee at least 2 papers — pull from unfiltered if needed
+                if (paperItems.length < 2) {
+                    var allPapers = unique.filter(function(i) { return i._type === 'paper'; });
+                    allPapers.sort(function(a, b) {
+                        var diff = (b._citations || 0) - (a._citations || 0);
+                        return diff !== 0 ? diff : new Date(b.pubDate || 0) - new Date(a.pubDate || 0);
+                    });
+                    paperItems = allPapers.slice(0, 6);
+                }
+
                 // Sort news by date (newest first)
                 newsItems.sort(function(a, b) {
                     return new Date(b.pubDate || 0) - new Date(a.pubDate || 0);
@@ -3391,14 +3394,15 @@
                     return diff !== 0 ? diff : new Date(b.pubDate || 0) - new Date(a.pubDate || 0);
                 });
 
-                // Build final list: 1-6 news guaranteed, then papers, up to 12
+                // Build final list: 1-6 news, 2-6 papers, up to 12
                 var newsCount = Math.max(1, Math.min(6, newsItems.length));
+                var paperCount = Math.max(2, Math.min(6, paperItems.length));
                 var finalList = [];
                 newsItems.slice(0, newsCount).forEach(function(i) { finalList.push(i); });
-                paperItems.slice(0, 12 - finalList.length).forEach(function(i) { finalList.push(i); });
+                paperItems.slice(0, paperCount).forEach(function(i) { finalList.push(i); });
 
                 // Fill to 12 from overflow
-                var remaining = newsItems.slice(newsCount).concat(paperItems.slice(12 - newsCount));
+                var remaining = newsItems.slice(newsCount).concat(paperItems.slice(paperCount));
                 remaining.forEach(function(item) {
                     if (finalList.length >= 12) return;
                     finalList.push(item);
