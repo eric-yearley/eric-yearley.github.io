@@ -2179,13 +2179,13 @@
         <div class="nav-inner">
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
+                <li><a href="#insights">Industry Pulse</a></li>
                 <li><a href="#expertise">Expertise</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#case-studies">Case Studies</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#publications">Publications</a></li>
                 <li><a href="#github">GitHub</a></li>
-                <li><a href="#insights">Insights</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <a href="Resume_Eric J Yearley.pdf" class="nav-resume" download>
@@ -2297,11 +2297,31 @@
         </div>
     </section>
 
+    <!-- AI in Biotech News Feed -->
+    <section id="insights" class="news-section">
+        <div class="section-container">
+            <header class="section-header">
+                <p class="section-label">02 — Industry Pulse</p>
+                <h2 class="section-title">AI in Biotech & CMC News</h2>
+                <p class="section-subtitle">Daily updates on artificial intelligence in pharma and CMC developments across the biotech industry</p>
+            </header>
+            <div id="news-content">
+                <div class="news-loading">
+                    <div class="spinner"></div>
+                    <p>Loading latest headlines...</p>
+                </div>
+            </div>
+            <div id="news-fallback" class="news-fallback" style="display:none;">
+                <p>Search <a href="https://news.google.com/search?q=AI%20biotech%20pharmaceutical%20CMC%20biologics" target="_blank" rel="noopener">Google News</a> for the latest on AI in biotech and CMC developments.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Expertise -->
     <section id="expertise">
         <div class="section-container">
             <header class="section-header">
-                <p class="section-label">02 — Expertise</p>
+                <p class="section-label">03 — Expertise</p>
                 <h2 class="section-title">Areas of Expertise</h2>
                 <p class="section-subtitle">Specialized capabilities across the analytical development lifecycle</p>
             </header>
@@ -2363,7 +2383,7 @@
     <section id="experience" class="experience">
         <div class="section-container">
             <header class="section-header">
-                <p class="section-label">03 — Experience</p>
+                <p class="section-label">04 — Experience</p>
                 <h2 class="section-title">Professional Journey</h2>
             </header>
             <div class="timeline">
@@ -2440,7 +2460,7 @@
     <section id="case-studies" class="case-studies">
         <div class="section-container">
             <header class="section-header">
-                <p class="section-label">04 — Impact</p>
+                <p class="section-label">05 — Impact</p>
                 <h2 class="section-title">Case Studies</h2>
                 <p class="section-subtitle">Transformative analytical solutions that enabled program advancement</p>
             </header>
@@ -2525,7 +2545,7 @@
     <section id="skills">
         <div class="section-container">
             <header class="section-header">
-                <p class="section-label">05 — Skills</p>
+                <p class="section-label">06 — Skills</p>
                 <h2 class="section-title">Technical Competencies</h2>
             </header>
             <div class="skills-grid">
@@ -2614,7 +2634,7 @@
     <section id="publications" class="publications">
         <div class="section-container">
             <header class="section-header">
-                <p class="section-label">06 — Publications</p>
+                <p class="section-label">07 — Publications</p>
                 <h2 class="section-title">Publications</h2>
             </header>
             <div class="publication-list">
@@ -2720,7 +2740,7 @@
     <section id="github" class="github-section">
         <div class="section-container">
             <header class="section-header">
-                <p class="section-label">07 — Open Source</p>
+                <p class="section-label">08 — Open Source</p>
                 <h2 class="section-title">GitHub Activity</h2>
                 <p class="section-subtitle">Open source projects and contributions</p>
             </header>
@@ -2753,26 +2773,6 @@
             </div>
             <div id="github-fallback" class="github-fallback" style="display:none;">
                 <p>Visit my profile on <a href="https://github.com/eric-yearley" target="_blank" rel="noopener">GitHub</a></p>
-            </div>
-        </div>
-    </section>
-
-    <!-- AI in Biotech News Feed -->
-    <section id="insights" class="news-section">
-        <div class="section-container">
-            <header class="section-header">
-                <p class="section-label">08 — Insights</p>
-                <h2 class="section-title">AI in Biotech</h2>
-                <p class="section-subtitle">Latest news on artificial intelligence in pharmaceutical development, CMC, and the life sciences</p>
-            </header>
-            <div id="news-content">
-                <div class="news-loading">
-                    <div class="spinner"></div>
-                    <p>Loading latest headlines...</p>
-                </div>
-            </div>
-            <div id="news-fallback" class="news-fallback" style="display:none;">
-                <p>Search <a href="https://news.google.com/search?q=AI%20biotech%20pharmaceutical%20CMC" target="_blank" rel="noopener">Google News</a> for the latest on AI in biotech.</p>
             </div>
         </div>
     </section>
@@ -2852,10 +2852,10 @@
             </div>
             <nav class="footer-links">
                 <a href="#about">About</a>
+                <a href="#insights">Industry Pulse</a>
                 <a href="#expertise">Expertise</a>
                 <a href="#experience">Experience</a>
                 <a href="#github">GitHub</a>
-                <a href="#insights">Insights</a>
                 <a href="#contact">Contact</a>
             </nav>
             <p class="footer-copyright">© <span id="copyright-year">2025</span> Eric J. Yearley. All rights reserved.</p>
@@ -3173,7 +3173,7 @@
         // ---- AI in Biotech News Feed ----
         (async function fetchNewsFeed() {
             var CACHE_KEY = 'news_ai_biotech';
-            var NEWS_CACHE_TTL = 6 * 60 * 60 * 1000; // 6 hours for news
+            var NEWS_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours — daily updates
 
             // Check cache with shorter TTL
             try {
@@ -3190,7 +3190,8 @@
             // RSS feeds to aggregate — Google News searches for AI in biotech/pharma/CMC
             var queries = [
                 'AI+biotech+pharmaceutical+drug+development',
-                'artificial+intelligence+CMC+biologics+analytical'
+                'artificial+intelligence+CMC+biologics+analytical',
+                'CMC+biologics+regulatory+pharmaceutical+update'
             ];
 
             try {
