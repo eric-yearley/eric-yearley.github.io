@@ -1846,6 +1846,17 @@
             border: 1px solid rgba(167,139,250,0.2);
         }
 
+        .news-citations {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--accent-gold);
+            background: rgba(251,191,36,0.08);
+            border: 1px solid rgba(251,191,36,0.2);
+            padding: 0.25rem 0.6rem;
+            border-radius: 3px;
+            letter-spacing: 0.05em;
+        }
+
         .news-date {
             font-family: var(--font-mono);
             font-size: 0.65rem;
@@ -3214,59 +3225,64 @@
                 }
             } catch {}
 
-            // Feed sources: news, papers, and preprints
-            var feeds = [
-                // Google News — AI in biotech
-                { url: 'https://news.google.com/rss/search?q=AI+biotech+pharmaceutical+drug+development&hl=en-US&gl=US&ceid=US:en', type: 'news' },
-                { url: 'https://news.google.com/rss/search?q=artificial+intelligence+CMC+biologics+analytical&hl=en-US&gl=US&ceid=US:en', type: 'news' },
-                // Google News — CMC updates
-                { url: 'https://news.google.com/rss/search?q=CMC+biologics+regulatory+pharmaceutical&hl=en-US&gl=US&ceid=US:en', type: 'news' },
-                // PubMed — recent AI in pharma/CMC papers
-                { url: 'https://pubmed.ncbi.nlm.nih.gov/rss/search/1sUVqK_aMYGhljCjdC4t4JSfvDWPAodWxDFH8YzVDnCh5VpaOL/?limit=15&utm_campaign=pubmed-2&fc=20220101000000', type: 'paper', fallbackQuery: 'artificial+intelligence+pharmaceutical+CMC+biologics' },
-                // bioRxiv — preprints on AI + biologics
-                { url: 'https://connect.biorxiv.org/biorxiv_xml.php?subject=bioinformatics', type: 'preprint' }
+            // --- NEWS: Google News (ranked by Google's trending algorithm) ---
+            var newsFeeds = [
+                'https://news.google.com/rss/search?q=AI+biotech+pharmaceutical+drug+development&hl=en-US&gl=US&ceid=US:en',
+                'https://news.google.com/rss/search?q=artificial+intelligence+CMC+biologics+analytical&hl=en-US&gl=US&ceid=US:en',
+                'https://news.google.com/rss/search?q=CMC+biologics+regulatory+pharmaceutical&hl=en-US&gl=US&ceid=US:en'
             ];
 
             try {
                 var allItems = [];
 
-                // Fetch Google News and PubMed feeds via rss2json
-                for (var i = 0; i < feeds.length; i++) {
-                    var feed = feeds[i];
+                // Fetch news via rss2json (Google already ranks by popularity/trending)
+                for (var i = 0; i < newsFeeds.length; i++) {
                     try {
-                        var apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed.url) + '&count=10';
+                        var apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(newsFeeds[i]) + '&count=8';
                         var res = await fetch(apiUrl);
                         if (!res.ok) continue;
                         var data = await res.json();
                         if (data.status === 'ok' && data.items) {
-                            data.items.forEach(function(item) {
-                                item._type = feed.type;
-                            });
+                            data.items.forEach(function(item) { item._type = 'news'; });
                             allItems = allItems.concat(data.items);
                         }
                     } catch { continue; }
                 }
 
-                // Also fetch recent Semantic Scholar papers on AI + CMC / biologics
-                try {
-                    var ssRes = await fetch('https://api.semanticscholar.org/graph/v1/paper/search?query=artificial+intelligence+CMC+biologics+pharmaceutical&limit=10&fields=title,url,publicationDate,venue,externalIds&year=2024-2026');
-                    if (ssRes.ok) {
+                // --- PAPERS: Semantic Scholar — high-citation papers only ---
+                // Two focused queries with citation count sorting
+                var ssQueries = [
+                    'artificial+intelligence+pharmaceutical+drug+development+CMC',
+                    'machine+learning+biologics+analytical+characterization'
+                ];
+
+                for (var q = 0; q < ssQueries.length; q++) {
+                    try {
+                        var ssRes = await fetch(
+                            'https://api.semanticscholar.org/graph/v1/paper/search?query=' + ssQueries[q] +
+                            '&limit=20&fields=title,url,publicationDate,venue,citationCount,influentialCitationCount' +
+                            '&year=2023-2026&sort=citationCount:desc'
+                        );
+                        if (!ssRes.ok) continue;
                         var ssData = await ssRes.json();
                         if (ssData.data) {
                             ssData.data.forEach(function(paper) {
-                                if (paper.title && paper.url) {
+                                // Only include papers with real traction (5+ citations)
+                                if (paper.title && paper.url && (paper.citationCount || 0) >= 5) {
                                     allItems.push({
                                         title: paper.title,
                                         link: paper.url,
                                         pubDate: paper.publicationDate || new Date().toISOString(),
                                         _type: 'paper',
-                                        _source: paper.venue || 'Semantic Scholar'
+                                        _source: paper.venue || '',
+                                        _citations: paper.citationCount || 0,
+                                        _influential: paper.influentialCitationCount || 0
                                     });
                                 }
                             });
                         }
-                    }
-                } catch {}
+                    } catch { continue; }
+                }
 
                 if (allItems.length === 0) throw new Error('No items');
 
@@ -3281,39 +3297,37 @@
                     }
                 });
 
-                // Sort by date (newest first)
-                unique.sort(function(a, b) {
+                // Separate by type
+                var newsItems = unique.filter(function(i) { return i._type === 'news'; });
+                var paperItems = unique.filter(function(i) { return i._type === 'paper'; });
+
+                // Sort news by date (newest first — Google already ranked by relevance)
+                newsItems.sort(function(a, b) {
                     return new Date(b.pubDate) - new Date(a.pubDate);
                 });
 
-                // Take top 12 — aim for a mix of types
-                var newsList = [];
-                var byType = { news: [], paper: [], preprint: [] };
-                unique.forEach(function(item) {
-                    var t = item._type || 'news';
-                    if (byType[t]) byType[t].push(item);
+                // Sort papers by citation count (most cited first = most discussed)
+                paperItems.sort(function(a, b) {
+                    return (b._citations || 0) - (a._citations || 0);
                 });
 
-                // Pick up to 4 from each category, fill remaining with whatever's left
-                ['news', 'paper', 'preprint'].forEach(function(t) {
-                    byType[t].slice(0, 4).forEach(function(item) { newsList.push(item); });
-                });
-                // Fill to 12 from remaining items
-                unique.forEach(function(item) {
-                    if (newsList.length >= 12) return;
-                    var isDup = newsList.some(function(n) { return n.title === item.title; });
-                    if (!isDup) newsList.push(item);
+                // Build final list: 6 news + 6 papers (or fill from whatever's available)
+                var finalList = [];
+                newsItems.slice(0, 6).forEach(function(i) { finalList.push(i); });
+                paperItems.slice(0, 6).forEach(function(i) { finalList.push(i); });
+
+                // Fill to 12 if one category had less
+                var remaining = newsItems.slice(6).concat(paperItems.slice(6));
+                remaining.forEach(function(item) {
+                    if (finalList.length >= 12) return;
+                    finalList.push(item);
                 });
 
-                // Re-sort the final mix by date
-                newsList.sort(function(a, b) {
-                    return new Date(b.pubDate) - new Date(a.pubDate);
-                });
-
-                var result = newsList.slice(0, 12).map(function(item) {
-                    // Extract source from Google News title format: "Title - Source"
+                var result = finalList.slice(0, 12).map(function(item) {
                     var source = item._source || '';
                     var title = item.title || '';
+
+                    // Extract source from Google News title format: "Title - Source"
                     if (!source && item._type === 'news') {
                         var parts = title.split(' - ');
                         if (parts.length > 1) {
@@ -3327,7 +3341,8 @@
                         source: source,
                         type: item._type || 'news',
                         date: item.pubDate,
-                        link: item.link
+                        link: item.link,
+                        citations: item._citations || 0
                     };
                 });
 
@@ -3350,8 +3365,8 @@
             var container = document.getElementById('news-content');
             if (!container) return;
 
-            var typeLabels = { news: 'News', paper: 'Paper', preprint: 'Preprint' };
-            var ctaLabels = { news: 'Read article', paper: 'View paper', preprint: 'View preprint' };
+            var typeLabels = { news: 'News', paper: 'Paper' };
+            var ctaLabels = { news: 'Read article', paper: 'View paper' };
 
             var html = '<div class="news-grid">';
 
@@ -3375,10 +3390,17 @@
                 var typeLabel = typeLabels[item.type] || 'News';
                 var ctaLabel = ctaLabels[item.type] || 'Read more';
 
+                // Citation badge for papers
+                var citationBadge = '';
+                if (item.type === 'paper' && item.citations > 0) {
+                    citationBadge = '<span class="news-citations">' + item.citations + ' citations</span>';
+                }
+
                 html += '<a href="' + item.link + '" class="news-card reveal" target="_blank" rel="noopener">' +
                     '<div class="news-meta">' +
                         '<span class="news-type ' + typeClass + '">' + typeLabel + '</span>' +
                         (safeSource ? '<span class="news-source">' + safeSource + '</span>' : '') +
+                        citationBadge +
                         '<span class="news-date">' + dateStr + '</span>' +
                     '</div>' +
                     '<h4>' + safeTitle + '</h4>' +
