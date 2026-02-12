@@ -3350,24 +3350,34 @@
                 var newsItems = recent.filter(function(i) { return i._type === 'news'; });
                 var paperItems = recent.filter(function(i) { return i._type === 'paper'; });
 
+                // Guarantee at least 1 news article — pull from unfiltered if needed
+                if (newsItems.length === 0) {
+                    var allNews = unique.filter(function(i) { return i._type === 'news'; });
+                    allNews.sort(function(a, b) {
+                        return new Date(b.pubDate || 0) - new Date(a.pubDate || 0);
+                    });
+                    newsItems = allNews.slice(0, 6);
+                }
+
                 // Sort news by date (newest first)
                 newsItems.sort(function(a, b) {
-                    return new Date(b.pubDate) - new Date(a.pubDate);
+                    return new Date(b.pubDate || 0) - new Date(a.pubDate || 0);
                 });
 
                 // Sort papers by citations then date
                 paperItems.sort(function(a, b) {
                     var diff = (b._citations || 0) - (a._citations || 0);
-                    return diff !== 0 ? diff : new Date(b.pubDate) - new Date(a.pubDate);
+                    return diff !== 0 ? diff : new Date(b.pubDate || 0) - new Date(a.pubDate || 0);
                 });
 
-                // Build final list: up to 6 news + up to 6 papers
+                // Build final list: 1-6 news guaranteed, then papers, up to 12
+                var newsCount = Math.max(1, Math.min(6, newsItems.length));
                 var finalList = [];
-                newsItems.slice(0, 6).forEach(function(i) { finalList.push(i); });
-                paperItems.slice(0, 6).forEach(function(i) { finalList.push(i); });
+                newsItems.slice(0, newsCount).forEach(function(i) { finalList.push(i); });
+                paperItems.slice(0, 12 - finalList.length).forEach(function(i) { finalList.push(i); });
 
                 // Fill to 12 from overflow
-                var remaining = newsItems.slice(6).concat(paperItems.slice(6));
+                var remaining = newsItems.slice(newsCount).concat(paperItems.slice(12 - newsCount));
                 remaining.forEach(function(item) {
                     if (finalList.length >= 12) return;
                     finalList.push(item);
