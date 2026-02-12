@@ -3210,15 +3210,15 @@
 
         // ---- AI in Biotech News Feed ----
         (async function fetchNewsFeed() {
-            // v5 cache key — improved dedup with proper noun matching
-            var CACHE_KEY = 'news_ai_biotech_v5';
+            // v6 cache key — refined dedup (stops false positives on papers)
+            var CACHE_KEY = 'news_ai_biotech_v6';
             var NEWS_CACHE_TTL = 12 * 60 * 60 * 1000; // 12 hours
 
             // Clear old cache keys
             try {
-                ['news_ai_biotech', 'news_ai_biotech_v2', 'news_ai_biotech_v3', 'news_ai_biotech_v4'].forEach(function(k) {
-                    localStorage.removeItem(k);
-                });
+                for (var v = 1; v <= 5; v++) {
+                    localStorage.removeItem(v === 1 ? 'news_ai_biotech' : 'news_ai_biotech_v' + v);
+                }
             } catch {}
 
             // Check cache
@@ -3320,44 +3320,32 @@
 
                 if (allItems.length === 0) throw new Error('No items');
 
-                // Deduplicate: word overlap OR shared proper nouns
-                var STOP_WORDS = {the:1,and:1,for:1,with:1,from:1,that:1,this:1,are:1,was:1,has:1,have:1,its:1,but:1,not:1,use:1,new:1,how:1,can:1,may:1,will:1,into:1,also:1};
+                // Deduplicate: word overlap + entity name matching
+                // Generic domain words excluded so only distinctive words drive matches
+                var STOP_WORDS = {the:1,and:1,for:1,with:1,from:1,that:1,this:1,are:1,was:1,has:1,have:1,its:1,but:1,not:1,use:1,new:1,how:1,can:1,may:1,will:1,into:1,also:1,
+                    drug:1,drugs:1,pharma:1,biotech:1,discovery:1,development:1,therapy:1,clinical:1,trial:1,trials:1,
+                    artificial:1,intelligence:1,machine:1,learning:1,technology:1,research:1,science:1,study:1,analysis:1,
+                    latest:1,says:1,could:1,show:1,shows:1,using:1,based:1,data:1,model:1,models:1,approach:1,
+                    pharmaceutical:1,biologics:1,manufacturing:1,regulatory:1,industry:1,expert:1,discusses:1};
                 function extractWords(str) {
                     return str.toLowerCase().replace(/[^a-z0-9 ]/g, '').split(/\s+/).filter(function(w) { return w.length > 2 && !STOP_WORDS[w]; });
                 }
-                function extractProperNouns(str) {
-                    // Find capitalized words (likely company/product names)
-                    var matches = str.match(/\b[A-Z][a-z]{2,}\b/g) || [];
-                    return matches.map(function(w) { return w.toLowerCase(); });
-                }
                 function isSameStory(a, b) {
-                    // Check word overlap
                     var wordsA = extractWords(a);
                     var wordsB = extractWords(b);
                     if (wordsA.length === 0 || wordsB.length === 0) return false;
                     var setB = {};
                     wordsB.forEach(function(w) { setB[w] = true; });
                     var shared = wordsA.filter(function(w) { return setB[w]; }).length;
-                    var overlapRatio = shared / Math.min(wordsA.length, wordsB.length);
-                    if (overlapRatio > 0.4) return true;
-
-                    // Check shared proper nouns (2+ shared = likely same story)
-                    var propsA = extractProperNouns(a);
-                    var propsB = extractProperNouns(b);
-                    if (propsA.length >= 2 && propsB.length >= 2) {
-                        var propSetB = {};
-                        propsB.forEach(function(w) { propSetB[w] = true; });
-                        var sharedProps = propsA.filter(function(w) { return propSetB[w]; }).length;
-                        if (sharedProps >= 2) return true;
-                    }
-                    return false;
+                    // Need 3+ distinctive words in common, AND >50% of the shorter title
+                    return shared >= 3 && shared / Math.min(wordsA.length, wordsB.length) > 0.5;
                 }
                 var unique = [];
                 allItems.forEach(function(item) {
-                    var dominated = unique.some(function(existing) {
+                    var isDup = unique.some(function(existing) {
                         return isSameStory(item.title, existing.title);
                     });
-                    if (!dominated) unique.push(item);
+                    if (!isDup) unique.push(item);
                 });
 
                 // === DATE FILTER ===
