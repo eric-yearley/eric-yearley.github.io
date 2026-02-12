@@ -3262,7 +3262,7 @@
 
                 for (var i = 0; i < newsFeeds.length; i++) {
                     try {
-                        var apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(newsFeeds[i]) + '&count=15';
+                        var apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(newsFeeds[i]);
                         var res = await fetch(apiUrl);
                         if (!res.ok) continue;
                         var data = await res.json();
